@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+  --color-primary: 0 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--color-primary));
+  background-color: rgb(var(--background-rgb));
+  font-family: "Helvetica W01", "Microsoft YaHei", 微软雅黑, SimHei, 黑体, "PingFang SC", 萍方, "Noto Sans", sans-serif;
+}

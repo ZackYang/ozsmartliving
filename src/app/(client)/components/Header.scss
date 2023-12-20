@@ -1,0 +1,80 @@
+#header {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+
+  nav {
+    font-family: Inter, sans-serif;
+
+    a {
+      position: relative;
+      font-weight: 500;
+      color: #000;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #000;
+    }
+
+    a::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #000;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    a:hover::before {
+      transform: scaleX(1);
+    }
+  }
+}
+
+img.logo {
+  width: 300px;
+}
+
+img.logo.toggled {
+  width: 150px;
+  animation-name: toggle-header;
+  animation-duration: 0.3s;
+}
+
+div.narrow {
+  padding-top: 0;
+  padding-bottom: 0;
+  animation-name: toggle-content;
+  animation-duration: 0.3s;
+}
+
+@keyframes toggle-content {
+  from {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  to {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@keyframes toggle-header {
+  from {
+    width: 300px;
+  }
+
+  to {
+    width: 150px;
+  }
+}
