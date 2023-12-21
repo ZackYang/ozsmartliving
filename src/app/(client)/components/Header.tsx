@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react'
 import './Header.scss'
 import Link from 'next/link';
-import Login from './login';
+import Auth from '../../(auth)/components/auth';
 
 export default function Header() {
   const logoElement = useRef<HTMLImageElement>(null)
@@ -11,24 +11,6 @@ export default function Header() {
   const headerContent = useRef<HTMLDivElement>(null)
 
   const [openModal, setOpenModal] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 0) {
-          logoElement.current?.classList.add('toggled')
-        } else {
-          logoElement.current?.classList.remove('toggled')
-        }
-
-        if (window.scrollY > 150) {
-          headerContent.current?.classList.add('narrow')
-        } else {
-          headerContent.current?.classList.remove('narrow')
-        }
-      });
-    }
-  }, []);
 
   return (
     <nav id="header" className="w-full fixed z-30 top-0 py-1">
@@ -47,8 +29,8 @@ export default function Header() {
             <ul className="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
               <li><a className="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="/curtains">CURTAINS</a></li>
               <li><a className="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="/blinds">BLINDS</a></li>
-              <li><a className="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="/blinds">GUIDES</a></li>
-              <li><a className="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="/blinds">ABOUT</a></li>
+              <li><a className="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="/guides">GUIDES</a></li>
+              <li><a className="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="/about">ABOUT</a></li>
             </ul>
           </nav>
         </div>
@@ -74,7 +56,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <Login openModal={openModal} setOpenModal={setOpenModal} />
+      <Auth openModal={openModal} setOpenModal={setOpenModal} />
     </nav>
   );
 }

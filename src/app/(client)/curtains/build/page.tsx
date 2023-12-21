@@ -1,6 +1,6 @@
-import CurtainTypeSelector from "@/app/components/CurtainTypeSelector";
-import FabricSelector from "@/app/components/FabricSelector";
-import Prisma from "../../../lib/prisma";
+import Prisma from "@/lib/prisma";
+import CurtainTypeSelector from "../../components/CurtainTypeSelector";
+import FabricSelector from "../../components/FabricSelector";
 
 const getProducts = async () => {
   const allUsers = await Prisma.product.findMany()

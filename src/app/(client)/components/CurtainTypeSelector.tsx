@@ -1,10 +1,9 @@
 import { Card } from 'flowbite-react';
 import { PiCheckCircleFill, PiNumberCircleOneDuotone } from "react-icons/pi";
 
-import sheerCurtain from '../../../public/sheer-curtain.jpg';
-import doubleCurtain from '../../../public/double-curtain.jpg';
-import blockoutCurtain from '../../../public/blockout-curtain.jpg';
-import curvedCurtain from '../../../public/curved-curtain.jpg';
+import sheerCurtain from '@/assets/sheer-curtain.jpg';
+import doubleCurtain from '@/assets/double-curtain.jpg';
+import blockoutCurtain from '@/assets/blockout-curtain.jpg';
 
 export default function CurtainTypeSelector() {
   const cardClassName = "max-w-sm grayscale-[50%] hover:cursor-pointer hover:grayscale-0 duration-100 hover:border-teal-500 border-2 border-white group duration-200 ease-in-out"

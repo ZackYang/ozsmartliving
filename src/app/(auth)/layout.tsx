@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import '../globals.scss'
-import Header from './components/Header'
+import './default.scss'
 
 export const metadata: Metadata = {
   title: 'OZ Smart Living',
@@ -15,8 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header></Header>
-        <div className="container mx-auto	w-full min-h-screen flex-col items-center justify-between">
+        <div className="flex h-screen items-center justify-center">
           {children}
         </div>
       </body>

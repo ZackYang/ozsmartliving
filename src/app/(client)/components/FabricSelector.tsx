@@ -2,9 +2,9 @@ import { Card } from 'flowbite-react';
 import { PiNumberCircleTwoDuotone } from "react-icons/pi";
 import { PiCheckCircleFill } from "react-icons/pi";
 
-import exaltation from '../../../public/exaltation.png';
-import euclid from '../../../public/euclid.png';
-import milkTea from '../../../public/milk-tea.png';
+import exaltation from '@/assets/exaltation.png';
+import euclid from '@/assets/euclid.png';
+import milkTea from '@/assets/milk-tea.png';
 
 export default function FabricSelector() {
   const cardClassName = "max-w-sm grayscale-200 grayscale-[50%] hover:cursor-pointer hover:grayscale-0 duration-100 hover:border-teal-500 border-2 border-white group duration-200 ease-in-out"
