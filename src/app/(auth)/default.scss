@@ -1,4 +1,24 @@
 body {
   background: rgb(255, 251, 253);
-  background: radial-gradient(circle, rgba(255, 251, 253, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  background: radial-gradient(circle, rgba(255, 251, 253, 1) 0%, rgb(20, 184, 166) 100%);
+}
+
+.background {
+  background: linear-gradient(122deg, #f0faf5, rgb(176, 250, 241));
+  background-size: 120% 120%;
+  animation: gradient-animation 5s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }

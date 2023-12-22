@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import '../globals.scss'
 import './default.scss'
+import Link from 'next/link'
+import { IoChevronBackCircleOutline, IoReturnUpBack } from "react-icons/io5";
+import { Alert } from 'flowbite-react';
 
 export const metadata: Metadata = {
   title: 'OZ Smart Living',
@@ -15,10 +18,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex h-screen items-center justify-center">
-          {children}
+        <div className="background">
+          <div className="flex flex-col max-w-md p-4 rounded-lg fixed top-0">
+            <Link href="/">
+              <IoReturnUpBack className="text-4xl text-gray-500 hover:text-gray-600 cursor-pointer" />
+            </Link>
+          </div>
+          <div className="flex h-screen items-center justify-center">
+            {children}
+          </div>
         </div>
       </body>
-    </html>
+    </html >
   )
 }

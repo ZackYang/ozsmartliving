@@ -1,17 +1,10 @@
 "use client";
 
-import { useEffect, useState, useRef } from 'react'
 import './Header.scss'
 import Link from 'next/link';
 import Auth from '../../(auth)/components/auth';
 
 export default function Header() {
-  const logoElement = useRef<HTMLImageElement>(null)
-  const headerElement = useRef<HTMLDivElement>(null)
-  const headerContent = useRef<HTMLDivElement>(null)
-
-  const [openModal, setOpenModal] = useState(false);
-
   return (
     <nav id="header" className="w-full fixed z-30 top-0 py-1">
       <div className="w-full mx-auto grid grid-cols-3 gap-0 mt-0 px-6 py-1">
@@ -42,9 +35,9 @@ export default function Header() {
         </div>
 
         <div className="flex flex-row-reverse py-2 order-2 md:order-3 text-right justify-items-center" id="nav-content">
-          <a className="align-baseline inline-block mx-5 no-underline hover:text-black hover:cursor-pointer" onClick={() => setOpenModal(true)}>
+          <Link href='/login' className="align-baseline inline-block mx-5 no-underline hover:text-black hover:cursor-pointer">
             Login
-          </a>
+          </Link>
           <div className='align-baseline'>
             <a className="ml-3 inline-block no-underline hover:text-black hover:cursor-pointer">
               <svg className="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -56,7 +49,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <Auth openModal={openModal} setOpenModal={setOpenModal} />
     </nav>
   );
 }
