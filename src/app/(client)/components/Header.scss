@@ -40,6 +40,8 @@
   }
 }
 
+$teal-600: rgb(13, 148, 136);
+
 img.logo {
   width: 300px;
 }
@@ -76,5 +78,46 @@ div.narrow {
 
   to {
     width: 150px;
+  }
+}
+
+.hideUserMenu {
+  display: none;
+}
+
+.userIconActive {
+  color: $teal-600;
+  background-color: white;
+  transform: rotate(25deg);
+  animation-name: select-icon;
+  animation-duration: 300ms;
+}
+
+@keyframes select-icon {
+  from {
+    background-color: $teal-600;
+    transform: rotate(0deg);
+  }
+
+  to {
+    background-color: white;
+    transform: rotate(25deg);
+  }
+
+}
+
+.showUserMenu {
+  display: block;
+  animation-name: toggle-user-menu;
+  animation-duration: 0.3s;
+}
+
+@keyframes toggle-user-menu {
+  from {
+    left: 100%;
+  }
+
+  to {
+    left: 0;
   }
 }

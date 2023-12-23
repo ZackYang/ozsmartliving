@@ -1,10 +1,31 @@
 "use client";
 
+import { getIronSession } from 'iron-session';
 import './Header.scss'
 import Link from 'next/link';
-import Auth from '../../(auth)/components/auth';
+import { cookies } from 'next/headers';
+import { SessionData, sessionOptions } from '@/lib/session';
+import { CgProfile } from "react-icons/cg";
+import { PiShoppingCartSimpleDuotone } from "react-icons/pi";
+import { useEffect, useState } from 'react';
+import { CiBoxList } from "react-icons/ci";
+import { MdOutlineManageAccounts } from "react-icons/md";
+import { BiLogOutCircle } from "react-icons/bi";
 
 export default function Header() {
+  const [user, setUser] = useState<SessionData | null>(null);
+  const [userManuOpen, setUserMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('/api/user')
+      const data = await res.json()
+      setUser(data)
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <nav id="header" className="w-full fixed z-30 top-0 py-1">
       <div className="w-full mx-auto grid grid-cols-3 gap-0 mt-0 px-6 py-1">
@@ -35,17 +56,43 @@ export default function Header() {
         </div>
 
         <div className="flex flex-row-reverse py-2 order-2 md:order-3 text-right justify-items-center" id="nav-content">
-          <Link href='/login' className="align-baseline inline-block mx-5 no-underline hover:text-black hover:cursor-pointer">
-            Login
-          </Link>
-          <div className='align-baseline'>
-            <a className="ml-3 inline-block no-underline hover:text-black hover:cursor-pointer">
-              <svg className="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M21,7H7.462L5.91,3.586C5.748,3.229,5.392,3,5,3H2v2h2.356L9.09,15.414C9.252,15.771,9.608,16,10,16h8 c0.4,0,0.762-0.238,0.919-0.606l3-7c0.133-0.309,0.101-0.663-0.084-0.944C21.649,7.169,21.336,7,21,7z M17.341,14h-6.697L8.371,9 h11.112L17.341,14z"></path>
-                <circle cx="10.5" cy="18.5" r="1.5"></circle>
-                <circle cx="17.5" cy="18.5" r="1.5"></circle>
-              </svg>
-            </a>
+          <div className='absolute text-white flex bg-teal-600 flex-row h-full items-center top-0 right-0 block ml-5 no-underline hover:cursor-pointer'>
+            {
+              user?.email
+                ? <div className="inline-block mx-5 no-underline hover:cursor-pointer">
+                  <CgProfile class={`text-2xl ${userManuOpen && 'userIconActive'}`} onClick={() => { setUserMenuOpen(!userManuOpen) }} />
+                  <div className={`${userManuOpen ? 'showUserMenu' : 'hidden'} h-screen mt-3 bg-teal-600 absolute left-0`}>
+                    <ul
+                      className={`w-full rounded-0  mt-5`}
+                    >
+                      <Link className='flex flex-row block hover:no-underline text-left p-3 hover:bg-white hover:text-teal-600' href='/orders'>
+                        <div className='inline-block align-middle'>
+                          <CiBoxList class='text-2xl mr-2 ml-2' />
+                        </div>
+                        Orders
+                      </Link>
+                      <Link className='flex flex-row block hover:no-underline text-left p-3 hover:bg-white hover:text-teal-600' href='/account'>
+                        <div className='inline-block'>
+                          <MdOutlineManageAccounts class='text-2xl ml-2 mr-2' />
+                        </div>
+                        Account
+                      </Link>
+                      <a className='flex flex-row block hover:no-underline text-left p-3 hover:bg-white hover:text-teal-600' href='/logout'>
+                        <div className='inline-block'>
+                          <BiLogOutCircle class='text-2xl ml-2 mr-2' />
+                        </div>
+                        Logout
+                      </a>
+                    </ul>
+                  </div>
+                </div>
+                : <Link href='/login' className="inline-block mx-5 no-underline hover:text-black hover:cursor-pointer">
+                  Login
+                </Link>
+            }
+            <Link href='/cart' className="mx-5 inline-block no-underline hover:text-black hover:cursor-pointer">
+              <PiShoppingCartSimpleDuotone class="text-2xl" />
+            </Link>
           </div>
         </div>
       </div>

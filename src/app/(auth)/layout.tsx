@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="background">
+        <div>
           <div className="flex flex-col max-w-md p-4 rounded-lg fixed top-0">
             <Link href="/">
               <IoReturnUpBack className="text-4xl text-gray-500 hover:text-gray-600 cursor-pointer" />
