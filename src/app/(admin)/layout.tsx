@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header></Header>
-        <div className="container mx-auto	w-full min-h-screen flex-col items-center justify-between">
+        <div className="container mx-auto min-h-screen flex-col items-center justify-between">
           {children}
         </div>
       </body>

@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import '../globals.scss'
 import './common-style.scss'
 import Header from './components/Header'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'OZ Smart Living',
@@ -15,9 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <head>
+      </head>
+      <body className={`${inter.className} overflow-x-hidden`}>
         <Header></Header>
-        <div className="bg-zinc-200	w-full min-h-screen flex-col items-center justify-between">
+        <div className="bg-zinc-200	w-full min-h-screen flex-col items-center justify-between relative">
           {children}
         </div>
       </body>

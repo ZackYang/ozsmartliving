@@ -11,40 +11,44 @@ datasource db {
 }
 
 model Image {
-  id          Int        @id @default(autoincrement())
-  url         String
-  order       Int        @default(0)
+  id          Int      @id @default(autoincrement())
+  raw         Json
+  order       Int      @default(0)
+  cover       Boolean  @default(false)
   description String
-  Product     Product?   @relation(fields: [productId], references: [id])
   productId   Int?
-  Variation   Variation? @relation(fields: [variationId], references: [id])
-  variationId Int?
+  variantId   Int?
+  product     Product? @relation(fields: [productId], references: [id])
+  variant     Variant? @relation(fields: [variantId], references: [id])
+
+  @@unique([productId, variantId, cover])
 }
 
 enum ProductType {
   sheerCurtain
   blockoutCurtain
-  doubleCuratin
+  dimoutCurtain
 }
 
 model Product {
   id               Int         @id @default(autoincrement())
-  Permalink        String
+  permalink        String?
   type             ProductType
   name             String
   code             String
   supplierName     String
+  description      String?
   unitPrice        Float
   createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
+  updatedAt        DateTime?   @updatedAt
   disabled         Boolean     @default(false)
   archived         Boolean     @default(false)
   careInstructions String
-  variations       Variation[]
+  variants         Variant[]
   images           Image[]
 }
 
-model Variation {
+model Variant {
   id               Int        @id @default(autoincrement())
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
@@ -53,7 +57,7 @@ model Variation {
   unitPrice        Float
   name             String
   code             String
-  careInstructions String     @map("care_instructions")
+  careInstructions String
   composition      String
   shadingRate      Int
   energyEfficiency Int
@@ -68,7 +72,7 @@ model Variation {
 model LineItem {
   id           Int       @id @default(autoincrement())
   reference    String    @unique @default(cuid())
-  variation    Variation @relation(fields: [variationId], references: [id])
+  variant      Variant   @relation(fields: [variantId], references: [id])
   specfication Json
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -77,7 +81,7 @@ model LineItem {
   total        Float
   Order        Order?    @relation(fields: [orderId], references: [id])
   orderId      Int
-  variationId  Int
+  variantId    Int
 }
 
 enum OrderStatus {

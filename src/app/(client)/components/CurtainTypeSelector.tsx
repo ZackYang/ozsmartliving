@@ -1,68 +1,82 @@
-import { Card } from 'flowbite-react';
+
 import { PiCheckCircleFill, PiNumberCircleOneDuotone } from "react-icons/pi";
+import { PiDotFill } from "react-icons/pi";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
-import sheerCurtain from '@/assets/sheer-curtain.jpg';
-import doubleCurtain from '@/assets/double-curtain.jpg';
-import blockoutCurtain from '@/assets/blockout-curtain.jpg';
+import Image from 'next/image';
+import { useState } from 'react';
+import { ProductType, productTypeList } from '@/lib/types/ProductType';
+import CurtainTypePanel from "./CurtainTypePanel";
 
-export default function CurtainTypeSelector() {
-  const cardClassName = "max-w-sm grayscale-[50%] hover:cursor-pointer hover:grayscale-0 duration-100 hover:border-teal-500 border-2 border-white group duration-200 ease-in-out"
+export default function CurtainTypeSelector({
+  updateAttribute
+}: {
+  updateAttribute: (attribute: string, value: any) => void
+}) {
+
+  const [selectedProductType, setSelectedProductType] = useState<ProductType | null>(null)
+
+  const renderProductTypes = () => {
+    return productTypeList.map((productType) => {
+      return (
+        <CurtainTypePanel
+          key={productType.type}
+          productType={productType}
+          selectedProductType={selectedProductType}
+          setSelectedProductType={setSelectedProductType}
+          updateAttribute={updateAttribute} />
+      )
+    })
+  }
 
   return (
     <>
       <div className='flex flex-row'>
         <h5 className='text-2xl flex items-center font-bold tracking-tight p-4'>
-          <div>
-            <PiNumberCircleOneDuotone class="inline text-5xl text-teal-500" />
+          <div className="inline text-2xl sm:text-5xl text-teal-500">
+            <PiNumberCircleOneDuotone />
           </div>
-          <span className='inline'>
+          <span className='text-sm sm:text-3xl inline'>
             Choose Curtain Type
           </span>
         </h5>
       </div >
-      <div className='grid grid-cols-3 gap-3'>
-        <Card
-          className={cardClassName}
-          imgAlt="Meaningful alt text for an image that is not purely decorative"
-          imgSrc={sheerCurtain.src}
-        >
-          <h5 className="text-center text-2xl font-bold tracking-tight">
-            Sheer Curtain
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            Letting in natural daylight
-            Stylise and sophisticate your room
-            Provide a level of privacy
-          </p>
-          <PiCheckCircleFill class="absolute drop-shadow-md -bottom-3 -right-3 group-hover:opacity-100 opacity-0 duration-200 ease-in-out text-5xl text-teal-500" />
-        </Card>
-        <Card
-          className={cardClassName}
-          imgAlt="Meaningful alt text for an image that is not purely decorative"
-          imgSrc={doubleCurtain.src}
-        >
-          <h5 className="text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Double Curtain
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-          </p>
-          <PiCheckCircleFill class="absolute drop-shadow-md -bottom-3 -right-3 group-hover:opacity-100 opacity-0 duration-200 ease-in-out text-5xl text-teal-500" />
-        </Card>
-        <Card
-          className={cardClassName}
-          imgAlt="Meaningful alt text for an image that is not purely decorative"
-          imgSrc={blockoutCurtain.src}
-        >
-          <h5 className="text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Blockout Curtain
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-          </p>
-          <PiCheckCircleFill class="absolute drop-shadow-md -bottom-3 -right-3 group-hover:opacity-100 opacity-0 duration-200 ease-in-out text-5xl text-teal-500" />
-        </Card>
+      <div className='hidden lg:grid gap-1 lg:grid-cols-2 xl:grid-cols-4 3xl:grid-cols-4'>
+        {
+          renderProductTypes()
+        }
+      </div>
+      <div className="lg:hidden">
+        <Carousel
+          responsive={{
+            superLargeDesktop: {
+              breakpoint: { max: 4000, min: 3000 },
+              items: 2,
+            },
+            desktop: {
+              breakpoint: { max: 3000, min: 1024 },
+              items: 2,
+
+            },
+            tablet: {
+              breakpoint: { max: 1024, min: 640 },
+              items: 2,
+            },
+            mobile: {
+              breakpoint: { max: 640, min: 0 },
+              items: 2,
+            },
+          }}
+          showDots={true}
+          ssr={true}
+          removeArrowOnDeviceType={["mobile"]}
+          autoPlay={false}>
+          {
+            renderProductTypes()
+          }
+        </Carousel>
       </div>
     </>
-  );
+  )
 }

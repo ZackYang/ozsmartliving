@@ -1,3 +1,6 @@
+$teal-600: #00897b;
+$purple-600: #4C1D95;
+
 a {
   text-decoration: none;
 
@@ -7,5 +10,33 @@ a {
 }
 
 body {
+  overflow-x: hidden;
+}
+
+body {
   padding-top: 70px;
+  position: relative
+}
+
+a[type=button] {
+  cursor: pointer;
+
+  background-color: $purple-600 !important;
+  border: none;
+  color: white !important;
+  border-radius: 2rem !important;
+  line-height: 1.5rem !important;
+  font-family: Helvetica, sans-serif;
+  outline: none !important;
+  border: none !important;
+  text-decoration: none !important;
+
+  &:hover {
+    background-color: darken($purple-600, 10%) !important;
+  }
+
+  &:active {
+    outline: none !important;
+    border: none !important;
+  }
 }
