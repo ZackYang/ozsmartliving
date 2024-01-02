@@ -13,5 +13,6 @@ export type Variant = {
   energyEfficiency: number
   daytimePrivacy: number
   nightimePrivacy: number
-  images: Image[]
+  coverImage?: string
+  images?: Image[]
 }

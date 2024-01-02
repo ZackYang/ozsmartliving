@@ -1,6 +1,7 @@
-import { Image } from "@prisma/client";
-import Base from "./Base";
+import { Image } from "../types/Image";
 import { Product } from "../types/Product";
+import Base from "./Base";
+import VariantSerializer from "./VariantSerializer";
 
 export default class ProductSerializer extends Base {
   constructor() {
@@ -12,7 +13,8 @@ export default class ProductSerializer extends Base {
     };
   }
 
-  serialize(product: any[]) {
+  serialize(product: Product[] | Product | null) {
+    if (!product) return ({} as Product);
     if (Array.isArray(product)) {
       return product.map((p) => this.serializeProduct(p));
     } else {
@@ -26,7 +28,7 @@ export default class ProductSerializer extends Base {
       coverImage: this.include.coverImage
         ? this.coverImage(product)
         : null,
-      variants: this.include.variants ? product.variants : undefined,
+      variants: this.include.variants ? new VariantSerializer().serialize(product.variants || []) : undefined,
       images: this.include.images ? product.images : undefined,
     };
   }

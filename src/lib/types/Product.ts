@@ -1,15 +1,19 @@
-import { Image, Prisma, Variant } from "@prisma/client"
+import { Image } from "./Image"
+import { Variant } from "./Variant"
 
 export type Product = {
   id: number
-  permalink: string
+  code: string
+  permalink: string | null
   type: string
   name: string
   unitPrice: number
-  priceFrom: number
-  description: string
+  description: string | null
   careInstructions: string
   variants?: Variant[]
-  coverImage: string
+  coverImage?: string
   images?: Image[]
+  supplierName?: string
+  disabled?: boolean
+  archived?: boolean
 }

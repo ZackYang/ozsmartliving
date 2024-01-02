@@ -10,6 +10,8 @@ import OzSmartImage from './OzSmartImage';
 import _, { set } from 'lodash';
 import userMediaSize from '@/lib/userMediaSize';
 import t from '@/../tailwind.config';
+import VariantList from './VariantList';
+import { Variant } from '@/lib/types/Variant';
 
 const ProductThumbnail = ({
   product,
@@ -26,10 +28,10 @@ const ProductThumbnail = ({
     <div
       key={key}
       className='m-1'
+      onClick={() => { onProductSelected(product) }}
     >
-      <div className={`${selected && 'border-teal-600'} w-full justify-center border-2 hover:border-teal-600 rounded-md relative `}>
+      <div className={`${selected && 'border-teal-600'} w-full group justify-center border-2 hover:border-teal-600 rounded-md relative mb-2`}>
         <OzSmartImage
-          onClick={() => { onProductSelected(product) }}
           src={product.coverImage}
           alt={product.name}
           className="grayscale-[75%] rounded inline-block cursor-pointer"
@@ -37,6 +39,10 @@ const ProductThumbnail = ({
           height={300}
           crop={'scale'}
         />
+        <div className='-mt-6 flex justify-center z-10 relative bg-teal-600 text-white rounded-b'>
+          {product.name}
+        </div>
+        <div className={`${selected ? 'block' : 'hidden'} left-5 w-3 h-3 bg-teal-600 absolute bottom-1 rotate-45 -mb-3`}></div>
       </div>
     </div>
   )
@@ -47,12 +53,16 @@ const RenderProductsRow = (
     products,
     index,
     selectedProduct,
-    onProductSelected
+    selectedVariant,
+    onProductSelected,
+    onVariantSelected,
   }: {
     products: Product[],
     index: number,
     selectedProduct?: Product | null,
+    selectedVariant?: Variant | null,
     onProductSelected: (product: Product) => void
+    onVariantSelected: (variant: Variant) => void
   }
 ) => {
   return (
@@ -76,7 +86,13 @@ const RenderProductsRow = (
         selectedProduct && products.map((product) => { return product.id }).includes(selectedProduct.id) && (
           <div className='flex flex-row justify-center'>
             <div className='text-3xl text-teal-500'>
-              hello
+              {
+                selectedProduct.variants &&
+                <VariantList
+                  onSelected={onVariantSelected}
+                  selectedVariant={selectedVariant}
+                  variants={selectedProduct.variants} />
+              }
             </div>
           </div>
         )
@@ -103,6 +119,7 @@ function RenderProducts({
 
   const colNumber = responsive[userMediaSize() as keyof typeof responsive];
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null)
 
   return (
     <>
@@ -115,6 +132,10 @@ function RenderProducts({
                 products={products}
                 index={index}
                 selectedProduct={selectedProduct}
+                selectedVariant={selectedVariant}
+                onVariantSelected={
+                  (variant) => { setSelectedVariant(variant) }
+                }
                 onProductSelected={
                   (product) => { setSelectedProduct(product) }
                 } />

@@ -1,10 +1,8 @@
 import ImageManager, { ImageData } from "@/app/(admin)/components/ImageManager"
 import VariantList from "@/app/(admin)/components/VariantList"
 import prisma from "@/lib/prisma"
-import { Variant } from "@/lib/types/Variant"
-import { Button, ButtonGroup, Table, TableBody, TableCell, TableHead, TableRow } from "flowbite-react"
-import { CldUploadButton } from "next-cloudinary"
-import Image from "next/image"
+import ProductSerializer from "@/lib/serializers/ProductSerializer"
+import { Button, ButtonGroup, Table, TableBody, TableCell, TableRow } from "flowbite-react"
 
 export default async function Page({
   params
@@ -13,7 +11,7 @@ export default async function Page({
     id: string
   }
 }) {
-  const product = (await prisma.product.findFirst(
+  const productData = (await prisma.product.findFirst(
     {
       where: { id: Number(params.id) },
       include: {
@@ -27,6 +25,9 @@ export default async function Page({
     }
   ))
 
+  const product = new ProductSerializer().serialize(productData)
+
+  if (Array.isArray(product)) return null
 
   if (!product) {
     return null
@@ -79,18 +80,6 @@ export default async function Page({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-bold">Created at</TableCell>
-                  <TableCell>
-                    {String(product?.createdAt) ?? ''}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-bold">Updated at</TableCell>
-                  <TableCell>
-                    {String(product?.updatedAt) ?? ''}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
                   <TableCell className="font-bold">Disabled</TableCell>
                   <TableCell>
                     {product?.disabled}
@@ -126,15 +115,18 @@ export default async function Page({
                     {product?.description}
                   </TableCell>
                 </TableRow>
-
               </TableBody>
             </Table>
             <h2 className="text-xl">Product Images</h2>
             <ImageManager images={product ? product.images as ImageData[] : []} productId={product?.id} />
           </div>
-          <div className="basis-1/2 flex flex-row">
-            <VariantList variants={product.variants} productId={product.id} />
-          </div>
+          {
+            product.variants && Array.isArray(product.variants) && (
+              <div className="basis-1/2 flex flex-row">
+                <VariantList variants={product.variants} productId={product.id} />
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

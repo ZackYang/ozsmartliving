@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 import { CldImage, CldUploadButton, getCldImageUrl } from 'next-cloudinary';
 import Image from 'next/image';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ImageEdit from './ImageEdit';
 import { Button, ButtonGroup, Card, Label, TextInput } from 'flowbite-react';
 
@@ -46,6 +46,10 @@ export default function ImageManager({
       return prevImages.concat([img])
     })
   }
+
+  useEffect(() => {
+    setUploadedImages(images?.sort((a, b) => a.order - b.order) || [])
+  }, [images])
 
   async function deleteImage(imageId: number) {
     const res = await fetch('/api/admin/images/delete', {
@@ -117,8 +121,8 @@ export default function ImageManager({
   }
 
   return (
-    <div className="gap-4">
-      <div className="grid grid-cols-4 ">
+    <div className="gap-2 h-lvh pb-10">
+      <div className="grid grid-cols-3">
         {
           uploadedImages.map((image) => {
             const raw = image.raw as any;
@@ -152,7 +156,7 @@ export default function ImageManager({
                     }
                   </Button>
                 </ButtonGroup>
-                <div className="w-32">
+                <div className="w-full">
                   <TextInput addon="Order" type="number" defaultValue={image?.order} onChange={(e) => { changeImageOrder({ id: image.id, event: e }) }} />
                 </div>
                 <ImageEdit

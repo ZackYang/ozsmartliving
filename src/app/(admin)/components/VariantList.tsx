@@ -5,6 +5,7 @@ import { Variant } from "@/lib/types/Variant";
 import { useState } from "react";
 import VariantForm from "./VariantForm";
 import VariantCard from "./VariantCard";
+import ImageManager, { ImageData } from "./ImageManager";
 
 export default function VariantList(
   {
@@ -17,6 +18,8 @@ export default function VariantList(
 ) {
   const [showNewForm, setShowNewForm] = useState(false);
   const [currentVariants, setCurrentVariants] = useState(variants || []);
+  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
+  const [currentVariantImages, setCurrentVariantImages] = useState<ImageData[]>([]);
 
   const addVariant = (variant: Variant) => {
     setCurrentVariants((prevVariants) => {
@@ -42,6 +45,18 @@ export default function VariantList(
     )
   }
 
+  const selectVariantHandler = (variant: Variant) => {
+    setSelectedVariant(prevariant => {
+      if (prevariant?.id === variant.id) {
+        return null
+      } else {
+        return variant
+      }
+    })
+
+    setCurrentVariantImages(variant.images as ImageData[])
+  }
+
   return (
     <div className="p-3 grid grid-cols-2">
       <div id="left">
@@ -49,7 +64,11 @@ export default function VariantList(
         {
           currentVariants.map(variant => {
             return (
-              <VariantCard key={variant.id} variant={variant} />
+              <VariantCard
+                key={variant.id}
+                selected={selectedVariant?.id === variant.id}
+                variant={variant}
+                onClick={selectVariantHandler} />
             )
           })
         }
@@ -59,6 +78,16 @@ export default function VariantList(
         </div>
       </div>
       <div id="right">
+        {
+          selectedVariant && (
+            <div className="fixed">
+              <h2 className="text-xl">Variant Images</h2>
+              <ImageManager
+                images={currentVariantImages}
+                variantId={selectedVariant?.id} />
+            </div>
+          )
+        }
       </div>
     </div>
   )

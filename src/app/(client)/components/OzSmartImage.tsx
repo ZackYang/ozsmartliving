@@ -14,7 +14,7 @@ export default function OzSmartImage({
   onClick,
   ...props
 }: {
-  src: string | Image,
+  src?: string | Image,
   alt: string,
   className?: string,
   width?: number,
@@ -26,10 +26,14 @@ export default function OzSmartImage({
 }) {
   let url = '';
 
-  if (typeof src !== 'string') {
-    url = (src.raw as any)?.public_id
+  if (!src) {
+    url = 'placeholder'
   } else {
-    url = src
+    if (typeof src !== 'string') {
+      url = (src.raw as any)?.public_id
+    } else {
+      url = src
+    }
   }
 
   const imageUrl = getCldImageUrl({
