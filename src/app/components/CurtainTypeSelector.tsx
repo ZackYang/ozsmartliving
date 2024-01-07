@@ -1,5 +1,3 @@
-
-import { PiNumberCircleOneDuotone } from "react-icons/pi";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -30,16 +28,6 @@ export default function CurtainTypeSelector({
 
   return (
     <>
-      <div className='flex flex-row'>
-        <h5 className='text-2xl flex items-center font-bold tracking-tight p-4'>
-          <div className="inline text-2xl sm:text-5xl text-teal-500">
-            <PiNumberCircleOneDuotone />
-          </div>
-          <span className='text-base sm:text-2xl inline'>
-            Choose Curtain Type
-          </span>
-        </h5>
-      </div >
       <div className='hidden lg:grid gap-1 lg:grid-cols-2 xl:grid-cols-4 3xl:grid-cols-4'>
         {
           renderProductTypes()
@@ -55,7 +43,6 @@ export default function CurtainTypeSelector({
             desktop: {
               breakpoint: { max: 3000, min: 1024 },
               items: 2,
-
             },
             tablet: {
               breakpoint: { max: 1024, min: 640 },

@@ -1,23 +1,15 @@
 'use client';
 
-import Prisma from "@/lib/prisma";
-import CurtainTypeSelector from "../../../components/CurtainTypeSelector";
-import FabricSelector from "../../../components/VariantSelector";
+import CurtainTypeSelector from "../../components/CurtainTypeSelector";
 import { use, useEffect, useState } from "react";
 import { LineItem } from "@/lib/types/LineItem";
-import CurtainTypePanel from "../../../components/CurtainTypePanel";
 import { ProductTypeName } from "@/lib/types/ProductType";
-import { getProductsByTypeName } from "@/lib/requests/Products";
 import Summary from "./Summary";
-import VariantSelector from "../../../components/VariantSelector";
-import { set } from "lodash";
+import VariantSelector from "../../components/VariantSelector";
+import { PiNumberCircleOneDuotone } from "react-icons/pi";
+import SelectorHeader from "@/app/components/SelectorHeader";
 
-// const getProducts = async () => {
-//   const allUsers = await Prisma.product.findMany()
-//   console.log(allUsers)
-// }
-
-export default function CurtainBuilder() {
+export default function DesignerCurtainBuilder() {
   const [lineItem, setLineItem] = useState({} as LineItem)
   const [firstProductType, setFirstProductType] = useState<ProductTypeName | null>(null)
   const [secondProductType, setSecondProductType] = useState<ProductTypeName | null>(null)
@@ -49,7 +41,12 @@ export default function CurtainBuilder() {
   return (
     <div className="grid grid-cols-5 justify-center ">
       <div className='col-span-5 md:col-span-3 xl:col-span-4 mini-h-[100dvh]'>
+        <SelectorHeader order={1} label='Choose your curtain type' />
         <CurtainTypeSelector updateAttribute={updateAttribute} />
+        {
+          firstProductType &&
+          <SelectorHeader order={2} label={`Choose your ${firstProductType && secondProductType ? "fabrics" : "fabric"}`} />
+        }
         {
           firstProductType &&
           <VariantSelector

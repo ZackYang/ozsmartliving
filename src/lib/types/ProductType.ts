@@ -33,19 +33,6 @@ export const productTypeList = [
     priceFrom: 265
   },
   {
-    name: 'Double Curtain',
-    description: [
-      'Enhanced Privacy',
-      'Light Control',
-      'Energy Efficiency',
-      'Versatility and Style',
-      'Maximized Space Usage'
-    ],
-    src: doubleCurtain,
-    type: ProductTypeName.DOUBLE_CURTAIN,
-    priceFrom: 547
-  },
-  {
     name: 'Blockout Curtain',
     description: [
       'Block 90% to 100% of light',
@@ -57,6 +44,19 @@ export const productTypeList = [
     src: blockoutCurtain,
     type: ProductTypeName.BLOCKOUT_CURTAIN,
     priceFrom: 347
+  },
+  {
+    name: 'Double Curtain',
+    description: [
+      'Enhanced Privacy',
+      'Light Control',
+      'Energy Efficiency',
+      'Versatility and Style',
+      'Maximized Space Usage'
+    ],
+    src: doubleCurtain,
+    type: ProductTypeName.DOUBLE_CURTAIN,
+    priceFrom: 547
   },
   {
     name: 'Dimout Curtain',

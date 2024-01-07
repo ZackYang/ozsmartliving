@@ -5,7 +5,7 @@ import { ProductTypeName } from '@/lib/types/ProductType';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 
-import ProductsDisplay from './ProductsDisplay';
+import ProductsDisplay from './ProductsList';
 
 
 export default function VariantSelector(
@@ -38,11 +38,8 @@ export default function VariantSelector(
     <div className='flex flex-col'>
       <div className='flex flex-row'>
         <h5 className='text-2xl flex items-center font-bold tracking-tight p-4'>
-          <div>
-
-          </div>
-          <span className='text-sm sm:text-3xl inline'>
-            Choose your <span className='text-teal-500'>{_.startCase(productType)}</span> fabric
+          <span className='text-base sm:text-xl inline'>
+            Select <span className='text-teal-500'>{_.startCase(productType)}</span> fabric
           </span>
         </h5>
       </div >

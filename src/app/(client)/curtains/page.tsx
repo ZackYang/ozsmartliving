@@ -1,10 +1,9 @@
-import CurtainBuilder from "./build/page";
+import DesignerCurtainBuilder from "./DesignerCurtainBuilder";
 
 export default function Curtains() {
   return (
     <div className="container mx-auto">
-      <CurtainBuilder />
+      <DesignerCurtainBuilder />
     </div>
-
   )
 }
