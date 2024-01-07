@@ -10,9 +10,11 @@ import ImageManager, { ImageData } from "./ImageManager";
 export default function VariantList(
   {
     variants,
-    productId
+    productId,
+    productName,
   }: {
     productId: number,
+    productName: string,
     variants?: Variant[]
   }
 ) {
@@ -66,6 +68,7 @@ export default function VariantList(
             return (
               <VariantCard
                 key={variant.id}
+                productId={productId}
                 selected={selectedVariant?.id === variant.id}
                 variant={variant}
                 onClick={selectVariantHandler} />

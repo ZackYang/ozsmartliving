@@ -1,15 +1,15 @@
 'use client';
 
 import Prisma from "@/lib/prisma";
-import CurtainTypeSelector from "../../components/CurtainTypeSelector";
-import FabricSelector from "../../components/VariantSelector";
+import CurtainTypeSelector from "../../../components/CurtainTypeSelector";
+import FabricSelector from "../../../components/VariantSelector";
 import { use, useEffect, useState } from "react";
 import { LineItem } from "@/lib/types/LineItem";
-import CurtainTypePanel from "../../components/CurtainTypePanel";
+import CurtainTypePanel from "../../../components/CurtainTypePanel";
 import { ProductTypeName } from "@/lib/types/ProductType";
 import { getProductsByTypeName } from "@/lib/requests/Products";
 import Summary from "./Summary";
-import VariantSelector from "../../components/VariantSelector";
+import VariantSelector from "../../../components/VariantSelector";
 import { set } from "lodash";
 
 // const getProducts = async () => {
@@ -47,7 +47,6 @@ export default function CurtainBuilder() {
 
 
   return (
-
     <div className="grid grid-cols-5 justify-center ">
       <div className='col-span-5 md:col-span-3 xl:col-span-4 mini-h-[100dvh]'>
         <CurtainTypeSelector updateAttribute={updateAttribute} />
@@ -56,6 +55,13 @@ export default function CurtainBuilder() {
           <VariantSelector
             onSelected={() => { }}
             productType={firstProductType}
+          />
+        }
+        {
+          secondProductType &&
+          <VariantSelector
+            onSelected={() => { }}
+            productType={secondProductType}
           />
         }
       </div>

@@ -10,10 +10,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else {
     const products = await prisma.product.findMany({
       where: {
-        type: req.query.typeName as ProductType
+        type: req.query.typeName as ProductType,
+        disabled: false,
+        archived: false,
       },
       include: {
         variants: {
+          where: {
+            disabled: false,
+            archived: false,
+          },
           include: {
             images: {
               select: {

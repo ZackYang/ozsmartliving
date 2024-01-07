@@ -17,6 +17,9 @@ export default async function Page({
       include: {
         images: true,
         variants: {
+          where: {
+            archived: false
+          },
           include: {
             images: true
           }
@@ -123,7 +126,11 @@ export default async function Page({
           {
             product.variants && Array.isArray(product.variants) && (
               <div className="basis-1/2 flex flex-row">
-                <VariantList variants={product.variants} productId={product.id} />
+                <VariantList
+                  variants={product.variants}
+                  productId={product.id}
+                  productName={product.name}
+                />
               </div>
             )
           }

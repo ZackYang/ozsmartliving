@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+
+.variant-unselected {
+  border-color: $bg-color;
+  border-width: 4px;
+  border-radius: 5%;
+  border-bottom-right-radius: 75%;
+}
+
+.variant-unselected:hover,
+.variant-selected {
+  border-bottom-right-radius: 5%;
+  border-color: $teal-600;
+  border-radius: 5%;
+  border-width: 4px;
+  animation: transform-to-variant-selected 0.3s ease-in-out forwards;
+
+  .detail-icon {
+    color: white;
+  }
+}
+
+@keyframes transform-to-variant-selected {
+  0% {
+    border-bottom-right-radius: 75%;
+    border-color: $bg-color;
+  }
+
+  100% {
+    border-bottom-right-radius: 5%;
+    border-color: $teal-600;
+  }
+}

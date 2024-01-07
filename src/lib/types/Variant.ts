@@ -5,7 +5,6 @@ export type Variant = {
   name: string
   code: string
   careInstructions: string
-  unitPrice: number
   disabled?: boolean
   archived?: boolean
   composition: string

@@ -14,7 +14,7 @@ export type LineItem = {
   curtainFinish?: 'off-floor' | 'touch-floor' | 'puddle',
   curtainHem?: 'lead' | '10mm' | '70mm' | '100mm',
   trackType?: 'standard' | 'low-profile' | 'double-track' | 'motorised' | 'curved' | 'bay-window' | 'corner-window' | 'low-profile-double-track' | 'motorised-double-track',
-  trackColor?: 'white' | 'black' | 'silver' | 'bronze' | 'anodised' | 'custom',
+  trackColor?: 'white' | 'black' | 'silver' | 'bronze' | 'anodised',
   quantity?: number,
   price?: number,
 }

@@ -53,7 +53,7 @@ export default function ProductForm(
         <div className="mb-2 block">
           <Label htmlFor="disabled" value="*Disabled （是否禁用）" />
         </div>
-        <Checkbox name='disabled' id="disabled" defaultChecked={product?.disabled} />
+        <Checkbox name='disabled' id="disabled" defaultChecked={product ? product.disabled : true} />
       </div>
       <div>
         <div className="mb-2 block">

@@ -54,7 +54,6 @@ model Variant {
   updatedAt        DateTime   @updatedAt
   disabled         Boolean    @default(false)
   archived         Boolean    @default(false)
-  unitPrice        Float
   name             String
   code             String
   careInstructions String

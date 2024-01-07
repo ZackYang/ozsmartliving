@@ -2,7 +2,7 @@ import prisma from '@/lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
+  if (req.method !== 'PUT') {
     res.status(405).json({ message: 'Method Not Allowed' })
     return
   } else if (!req.body) {
@@ -13,7 +13,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const data = JSON.parse(req.body)
 
-    const variant = await prisma.variant.create({
+    const variant = await prisma.variant.update({
+      where: { id: data.id },
       data: {
         name: data.name,
         code: data.code,

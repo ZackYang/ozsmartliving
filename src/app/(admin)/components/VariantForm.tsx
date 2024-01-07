@@ -26,25 +26,29 @@ export default function VariantForm(
   ) => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
-    const res = await fetch('/api/admin/variants/create', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: data.get('name'),
-        code: data.get('code'),
-        unitPrice: data.get('unitPrice'),
-        composition: data.get('composition'),
-        careInstructions: data.get('careInstructions'),
-        shadingRate: data.get('shadingRate'),
-        energyEfficiency: data.get('energyEfficiency'),
-        daytimePrivacy: data.get('daytimePrivacy'),
-        nightimePrivacy: data.get('nightimePrivacy'),
-        disabled: data.get('disabled'),
-        archived: data.get('archived'),
-        productId: productId
-      })
-    })
 
-    const variant = await res.json() as Variant
+    const url = variant?.id ? `/api/admin/variants/update` : '/api/admin/variants/create'
+
+    let payload = {
+      name: data.get('name'),
+      code: data.get('code'),
+      composition: data.get('composition'),
+      careInstructions: data.get('careInstructions'),
+      shadingRate: data.get('shadingRate'),
+      energyEfficiency: data.get('energyEfficiency'),
+      daytimePrivacy: data.get('daytimePrivacy'),
+      nightimePrivacy: data.get('nightimePrivacy'),
+      disabled: data.get('disabled'),
+      archived: data.get('archived'),
+      productId: productId
+    } as any
+
+    payload['id'] = variant?.id
+
+    const res = await fetch(url, {
+      method: variant?.id ? 'PUT' : 'POST',
+      body: JSON.stringify(payload)
+    })
 
     setShowNewForm(false)
   }
@@ -62,9 +66,6 @@ export default function VariantForm(
                 </div>
                 <div>
                   <TextInput addon="Code" name="code" id="small" type="text" sizing="sm" defaultValue={variant?.code} required />
-                </div>
-                <div>
-                  <TextInput addon="Price" name="unitPrice" id="price" type="text" sizing="sm" defaultValue={variant?.unitPrice} required />
                 </div>
                 <div className="max-w-md">
                   <div className="mb-2 block">

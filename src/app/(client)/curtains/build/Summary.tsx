@@ -1,6 +1,6 @@
 import { LineItem } from "@/lib/types/LineItem";
-import CurtainTypePanel from "../../components/CurtainTypePanel";
-import OzSmartImage from "../../components/OzSmartImage";
+import CurtainTypePanel from "../../../components/CurtainTypePanel";
+import OzSmartImage from "../../../components/OzSmartImage";
 
 function renderProductType(
   lineItem: LineItem

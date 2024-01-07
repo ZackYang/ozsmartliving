@@ -1,10 +1,8 @@
 
-import { PiCheckCircleFill, PiNumberCircleOneDuotone } from "react-icons/pi";
-import { PiDotFill } from "react-icons/pi";
+import { PiNumberCircleOneDuotone } from "react-icons/pi";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import Image from 'next/image';
 import { useState } from 'react';
 import { ProductType, productTypeList } from '@/lib/types/ProductType';
 import CurtainTypePanel from "./CurtainTypePanel";
@@ -37,7 +35,7 @@ export default function CurtainTypeSelector({
           <div className="inline text-2xl sm:text-5xl text-teal-500">
             <PiNumberCircleOneDuotone />
           </div>
-          <span className='text-sm sm:text-3xl inline'>
+          <span className='text-base sm:text-2xl inline'>
             Choose Curtain Type
           </span>
         </h5>
@@ -70,7 +68,7 @@ export default function CurtainTypeSelector({
           }}
           showDots={true}
           ssr={true}
-          removeArrowOnDeviceType={["mobile"]}
+          arrows={false}
           autoPlay={false}>
           {
             renderProductTypes()
