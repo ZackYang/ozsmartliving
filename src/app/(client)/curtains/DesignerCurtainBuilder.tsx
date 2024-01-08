@@ -112,10 +112,10 @@ export default function DesignerCurtainBuilder() {
   }
 
   const renderSizeSelector = () => {
-    const order = lineItem.productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN] ? 4 : 3
     return (
+      lineItem.productType &&
       <>
-        <SelectorHeader order={order} label='Measurements' />
+        <SelectorHeader order={3} label='Measurements' />
       </>
     )
   }

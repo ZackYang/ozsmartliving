@@ -12,12 +12,12 @@ import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-re
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 export default function CurtainTypeSelector() {
-  const wrapper = document.querySelector('.carousel');
+  const wrapper = window.document.querySelector('.carousel');
 
   const [width, setWidth] = React.useState((wrapper as HTMLElement)?.offsetWidth);
 
   React.useEffect(() => {
-    const wrapper = document.querySelector('.carousel');
+    const wrapper = window.document.querySelector('.carousel');
     setWidth((wrapper as HTMLElement)?.offsetWidth)
     window.addEventListener("resize", () => {
       setWidth((wrapper as HTMLElement)?.offsetWidth)
