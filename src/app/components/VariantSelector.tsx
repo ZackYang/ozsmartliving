@@ -1,20 +1,28 @@
 'use client';
 
 import { Product } from '@/lib/types/Product';
-import { ProductTypeName } from '@/lib/types/ProductType';
-import { useEffect, useState } from 'react';
+import { ProductType, ProductTypeName } from '@/lib/types/ProductType';
+import { useContext, useEffect, useState } from 'react';
 import _ from 'lodash';
 
-import ProductsDisplay from './ProductsList';
+import ProductsList from './ProductsList';
+import { Variant } from '@/lib/types/Variant';
+import VariantSelectorContext from './contexts/VariantSelectorContext';
 
 
 export default function VariantSelector(
   {
     productType,
-    onSelected,
+    selectedProduct,
+    onProductSelected,
+    selectedVariant,
+    onVariantSelected,
   }: {
-    productType: ProductTypeName,
-    onSelected?: (productType: ProductTypeName) => void
+    productType: ProductType
+    selectedProduct: Product | null
+    onProductSelected: (product: Product | null) => void
+    selectedVariant: Variant | null
+    onVariantSelected: (variant: Variant | null) => void
   }
 ) {
   const [products, setProducts] = useState<Product[]>([])
@@ -28,7 +36,7 @@ export default function VariantSelector(
   useEffect(() => {
     setProducts([])
 
-    getProductsByTypeName(productType).then((products) => {
+    getProductsByTypeName(productType.typeName).then((products) => {
       if (products.length > 0)
         setProducts(products)
     })
@@ -39,12 +47,15 @@ export default function VariantSelector(
       <div className='flex flex-row'>
         <h5 className='text-2xl flex items-center font-bold tracking-tight p-4'>
           <span className='text-base sm:text-xl inline'>
-            Select <span className='text-teal-500'>{_.startCase(productType)}</span> fabric
+            Select <span className='text-teal-500'>{_.startCase(productType.name)}</span> fabric
           </span>
         </h5>
       </div >
 
-      <ProductsDisplay products={products} />
-    </div>
+      <VariantSelectorContext.Provider value={{ selectedProduct, onProductSelected, selectedVariant, onVariantSelected }}>
+        < ProductsList
+          products={products} />
+      </VariantSelectorContext.Provider>
+    </div >
   )
 }

@@ -1,11 +1,15 @@
+import { Product } from "./Product";
 import { ProductType } from "./ProductType";
+import { Variant } from "./Variant";
 
 export type LineItem = {
-  productType?: ProductType,
-  productOne?: JSON,
-  variantOne?: JSON,
-  productTwo?: JSON,
-  variantTwo?: JSON,
+  productType: ProductType | null,
+  productTypeOne: ProductType | null,
+  productOne: Product | null,
+  variantOne: Variant | null,
+  productTypeTwo: ProductType | null,
+  productTwo: Product | null,
+  variantTwo: Variant | null,
   width?: number,
   height?: number,
   mountType?: 'ceiling' | 'wall',

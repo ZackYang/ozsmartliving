@@ -4,17 +4,17 @@ import OzSmartImage from './OzSmartImage';
 export default function ProductThumbnail({
   product,
   selected,
-  onProductSelected
+  onClick,
 }: {
   product: Product,
   selected?: boolean,
-  onProductSelected: (product: Product) => void
+  onClick: () => void
 }) {
   return (
     <div
       key={product.id}
       className='m-1'
-      onClick={() => { onProductSelected(product) }}
+      onClick={onClick}
     >
       <div className={`${selected && 'border-teal-600'} w-full group justify-center border-2 hover:border-teal-600 rounded-md relative mb-2`}>
         <OzSmartImage

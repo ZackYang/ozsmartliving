@@ -1,5 +1,5 @@
 import { Image } from '@/lib/types/Image';
-import { CldImage, getCldImageUrl } from 'next-cloudinary';
+import { getCldImageUrl } from 'next-cloudinary';
 import ImageEle from 'next/image';
 
 export default function OzSmartImage({
@@ -11,6 +11,7 @@ export default function OzSmartImage({
   crop,
   gravity,
   quality,
+  priority,
   onClick,
   ...props
 }: {
@@ -22,6 +23,7 @@ export default function OzSmartImage({
   crop?: string,
   gravity?: string,
   quality?: string,
+  priority?: boolean,
   onClick?: () => void
 }) {
   let url = '';
@@ -53,6 +55,8 @@ export default function OzSmartImage({
       height={height}
       className={className}
       onClick={onClick}
+      loading={priority ? 'eager' : 'lazy'}
+      priority={priority}
       {...props}
     />
   )
@@ -100,7 +104,5 @@ export function getUrl({
     quality,
   })
 
-
   return imageUrl
-
 }

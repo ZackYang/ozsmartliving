@@ -14,12 +14,12 @@ export type ProductType = {
   name: string,
   description: Array<string>,
   src: string,
-  type: ProductTypeName,
+  typeName: ProductTypeName,
   priceFrom: number,
 }
 
-export const productTypeList = [
-  {
+export const productTypeMap = {
+  [ProductTypeName.SHEER_CURTAIN]: {
     name: 'Sheer Curtain',
     description: [
       'Softening of Sunlight',
@@ -29,10 +29,10 @@ export const productTypeList = [
       'Natural Light Illumination',
     ],
     src: sheerCurtain,
-    type: ProductTypeName.SHEER_CURTAIN,
+    typeName: ProductTypeName.SHEER_CURTAIN,
     priceFrom: 265
   },
-  {
+  [ProductTypeName.BLOCKOUT_CURTAIN]: {
     name: 'Blockout Curtain',
     description: [
       'Block 90% to 100% of light',
@@ -42,10 +42,10 @@ export const productTypeList = [
       'Sound Absorption'
     ],
     src: blockoutCurtain,
-    type: ProductTypeName.BLOCKOUT_CURTAIN,
+    typeName: ProductTypeName.BLOCKOUT_CURTAIN,
     priceFrom: 347
   },
-  {
+  [ProductTypeName.DOUBLE_CURTAIN]: {
     name: 'Double Curtain',
     description: [
       'Enhanced Privacy',
@@ -55,10 +55,10 @@ export const productTypeList = [
       'Maximized Space Usage'
     ],
     src: doubleCurtain,
-    type: ProductTypeName.DOUBLE_CURTAIN,
+    typeName: ProductTypeName.DOUBLE_CURTAIN,
     priceFrom: 547
   },
-  {
+  [ProductTypeName.DIMOUT_CURTAIN]: {
     name: 'Dimout Curtain',
     description: [
       'Block 60% to 90% of light',
@@ -68,8 +68,14 @@ export const productTypeList = [
       'Noise Reduction'
     ],
     src: dimoutCurtain,
-    type: ProductTypeName.DIMOUT_CURTAIN,
+    typeName: ProductTypeName.DIMOUT_CURTAIN,
     priceFrom: 372
   }
+}
 
+export const productTypeList = [
+  productTypeMap[ProductTypeName.SHEER_CURTAIN],
+  productTypeMap[ProductTypeName.BLOCKOUT_CURTAIN],
+  productTypeMap[ProductTypeName.DOUBLE_CURTAIN],
+  productTypeMap[ProductTypeName.DIMOUT_CURTAIN],
 ]

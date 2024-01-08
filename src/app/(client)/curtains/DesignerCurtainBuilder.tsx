@@ -1,70 +1,147 @@
 'use client';
 
 import CurtainTypeSelector from "../../components/CurtainTypeSelector";
-import { use, useEffect, useState } from "react";
-import { LineItem } from "@/lib/types/LineItem";
-import { ProductTypeName } from "@/lib/types/ProductType";
-import Summary from "./Summary";
+import { useEffect, useState } from "react";
+import Summary from "../../components/Summary"
 import VariantSelector from "../../components/VariantSelector";
-import { PiNumberCircleOneDuotone } from "react-icons/pi";
 import SelectorHeader from "@/app/components/SelectorHeader";
+import lineItemContext from "@/app/components/contexts/LineItemContext";
+import { LineItem } from "@/lib/types/LineItem";
+import { Product } from "@/lib/types/Product";
+import { ProductTypeName, productTypeMap } from "@/lib/types/ProductType";
 
 export default function DesignerCurtainBuilder() {
-  const [lineItem, setLineItem] = useState({} as LineItem)
-  const [firstProductType, setFirstProductType] = useState<ProductTypeName | null>(null)
-  const [secondProductType, setSecondProductType] = useState<ProductTypeName | null>(null)
-
-  const updateAttribute = (attribute: string, value: any) => {
-    setLineItem({ ...lineItem, [attribute]: value })
-  }
+  const [lineItem, setLineItem] = useState<LineItem>({
+    productType: null,
+    productTypeOne: null,
+    productTypeTwo: null,
+    productOne: null,
+    productTwo: null,
+    variantOne: null,
+    variantTwo: null,
+  })
 
   useEffect(() => {
-    if (lineItem.productType)
-      setProducts(lineItem.productType.type)
+    setLineItem((prev) => {
+      return {
+        ...prev,
+        productOne: null,
+        variantOne: null,
+        productTwo: null,
+        variantTwo: null,
+        productTypeOne: lineItem.productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN] ? productTypeMap[ProductTypeName.BLOCKOUT_CURTAIN] : lineItem.productType,
+        productTypeTwo: lineItem.productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN] ? productTypeMap[ProductTypeName.SHEER_CURTAIN] : null,
+      }
+    })
   }, [lineItem.productType])
 
-  const setProducts = async (
-    typeName: ProductTypeName
-  ) => {
-    setFirstProductType(null)
-    setSecondProductType(null)
+  const renderProductTypeSelector = () => {
+    return (
+      <>
+        <SelectorHeader order={1} label='Choose your curtain type' />
+        <CurtainTypeSelector />
+      </>
+    )
+  }
 
-    if (typeName == ProductTypeName.DOUBLE_CURTAIN) {
-      setFirstProductType(ProductTypeName.BLOCKOUT_CURTAIN)
-      setSecondProductType(ProductTypeName.SHEER_CURTAIN)
-    } else {
-      setFirstProductType(typeName)
-    }
+  const renderProductOneSelector = () => {
+    return (
+      lineItem.productTypeOne &&
+      <>
+        <SelectorHeader order={2} label={`Choose your ${lineItem.productTypeOne && lineItem.productTypeTwo ? "fabrics" : "fabric"}`} />
+        <VariantSelector
+          selectedProduct={lineItem.productOne}
+          selectedVariant={lineItem.variantOne}
+          productType={lineItem.productTypeOne}
+          onProductSelected={
+            (product: Product | null) => {
+              setLineItem((prev) => {
+                return {
+                  ...prev,
+                  productOne: product
+                }
+              })
+            }
+          }
+          onVariantSelected={
+            (variant) => {
+              setLineItem((prev) => {
+                return {
+                  ...prev,
+                  variantOne: variant
+                }
+              })
+            }
+          }
+        />
+      </>
+    )
+  }
+
+  const renderProductTwoSelector = () => {
+    return (
+      lineItem.productTypeTwo &&
+      <>
+        <VariantSelector
+          selectedProduct={lineItem.productTwo}
+          selectedVariant={lineItem.variantTwo}
+          productType={lineItem.productTypeTwo}
+          onProductSelected={
+            (product: Product | null) => {
+              setLineItem((prev) => {
+                return {
+                  ...prev,
+                  productTwo: product
+                }
+              })
+            }
+          }
+          onVariantSelected={
+            (variant) => {
+              setLineItem((prev) => {
+                return {
+                  ...prev,
+                  variantTwo: variant
+                }
+              })
+            }
+          }
+        />
+      </>
+    )
+  }
+
+  const renderSizeSelector = () => {
+    const order = lineItem.productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN] ? 4 : 3
+    return (
+      <>
+        <SelectorHeader order={order} label='Measurements' />
+      </>
+    )
   }
 
 
   return (
     <div className="grid grid-cols-5 justify-center ">
-      <div className='col-span-5 md:col-span-3 xl:col-span-4 mini-h-[100dvh]'>
-        <SelectorHeader order={1} label='Choose your curtain type' />
-        <CurtainTypeSelector updateAttribute={updateAttribute} />
-        {
-          firstProductType &&
-          <SelectorHeader order={2} label={`Choose your ${firstProductType && secondProductType ? "fabrics" : "fabric"}`} />
-        }
-        {
-          firstProductType &&
-          <VariantSelector
-            onSelected={() => { }}
-            productType={firstProductType}
-          />
-        }
-        {
-          secondProductType &&
-          <VariantSelector
-            onSelected={() => { }}
-            productType={secondProductType}
-          />
-        }
-      </div>
-      <div className='col-span-5 md:col-span-2 xl:col-span-1 mini-h-[100dvh]'>
-        <Summary lineItem={lineItem} />
-      </div>
-    </div>
+      <lineItemContext.Provider value={{ lineItem, setLineItem }}>
+        <div className='col-span-5 md:col-span-3 xl:col-span-4 mini-h-[100dvh]'>
+          {
+            renderProductTypeSelector()
+          }
+          {
+            renderProductOneSelector()
+          }
+          {
+            renderProductTwoSelector()
+          }
+          {
+            renderSizeSelector()
+          }
+        </div>
+        <div className='col-span-5 md:col-span-2 xl:col-span-1 mini-h-[100dvh]'>
+          <Summary lineItem={lineItem} />
+        </div>
+      </lineItemContext.Provider>
+    </div >
   );
 }

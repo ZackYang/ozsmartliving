@@ -37,7 +37,17 @@ export default function VariantModel(
     <div className={`fixed cursor-default top-0 md:grid md:content-center left-0 w-full z-50 flex justify-center ${closing ? 'VariantModelClosing' : 'VariantModel'} h-dvh`}>
       <div className="fixed top-0 left-0 w-full h-full bg-black opacity-75 z-0" onClick={closeModel}></div>
       <div className="container bg-teal-600 rounded h-max max-w-3xl max-h-dvh overflow-y-auto flex flex-col z-30">
-        <div className="mt-6">
+        <div className="flex flex-row text-4xl m-2 z-40 gap-2 mt-4">
+          <div className="basis-1/5 flex justify-start">
+            <CloseButton onClick={closeModel} />
+          </div>
+          <div className="basis-4/5 flex justify-end">
+            <OrderSampleButton>
+              Order a free sample
+            </OrderSampleButton>
+          </div>
+        </div>
+        <div className="mt-2">
           {
             variant?.images && (
               <Carousel
@@ -89,16 +99,6 @@ export default function VariantModel(
         </div>
         <div className="justify-center text-white rounded p-3">
           <div className="flex flex-col justify-center gap-2">
-            <div className="flex flex-row text-4xl m-2 z-40 gap-2">
-              <div className="basis-1/5 flex justify-start">
-                <CloseButton onClick={closeModel} />
-              </div>
-              <div className="basis-4/5 flex justify-end">
-                <OrderSampleButton>
-                  Order a free sample
-                </OrderSampleButton>
-              </div>
-            </div>
             <div className="text-2xl font-normal ">
               <span className="text-3xl font-bold">{variant.name}</span>/{product.name}
             </div>

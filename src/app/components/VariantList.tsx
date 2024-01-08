@@ -11,23 +11,27 @@ export default function VariantList({
   selectedVariant,
   product,
   onSelected,
+  className,
 }: {
   product: Product,
   variants: Variant[],
   selectedVariant?: Variant | null,
   onSelected?: (variant: Variant) => void,
+  className?: string,
 }) {
   const [displayedVariant, setDisplayedVariant] = useState<Variant | null>(null)
 
   return (
-    <div className={
-      `
-      grid grid-cols-3 xs:grid-cols-3 sm:grid-cols-4
-      md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
-      2xl:grid-cols-6 3xl:grid-cols-6 4xl:grid-cols-6
-      rounded gap-1 p-1
-      `
-    }>
+    <div
+      className={
+        `
+        grid grid-cols-3 xs:grid-cols-3 sm:grid-cols-4
+        md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
+        2xl:grid-cols-6 3xl:grid-cols-6 4xl:grid-cols-6
+        rounded gap-1 p-1
+        ` + className
+      }
+    >
       {
         variants.map((variant) => {
           return (
@@ -41,6 +45,7 @@ export default function VariantList({
                 width={200}
                 height={200}
                 crop="fill"
+                priority={true}
                 onClick={() => { onSelected && onSelected(variant) }}
                 className={`w-full ${selectedVariant?.id === variant.id ? 'variant-selected' : 'variant-unselected'}`}
               />
