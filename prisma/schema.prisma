@@ -44,6 +44,8 @@ model Product {
   disabled         Boolean     @default(false)
   archived         Boolean     @default(false)
   careInstructions String
+  maxHeight        Int         @default(3000)
+  maxWidth         Int         @default(20000)
   variants         Variant[]
   images           Image[]
 }

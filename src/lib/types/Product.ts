@@ -14,6 +14,8 @@ export type Product = {
   coverImage?: string
   images?: Image[]
   supplierName?: string
+  maxHeight: number
+  maxWidth: number
   disabled?: boolean
   archived?: boolean
 }

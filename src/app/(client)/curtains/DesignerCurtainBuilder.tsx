@@ -9,6 +9,7 @@ import lineItemContext from "@/app/components/contexts/LineItemContext";
 import { LineItem } from "@/lib/types/LineItem";
 import { Product } from "@/lib/types/Product";
 import { ProductTypeName, productTypeMap } from "@/lib/types/ProductType";
+import SizeSelector from "@/app/components/SizeSelector";
 
 export default function DesignerCurtainBuilder() {
   const [lineItem, setLineItem] = useState<LineItem>({
@@ -112,10 +113,31 @@ export default function DesignerCurtainBuilder() {
   }
 
   const renderSizeSelector = () => {
+    let maxWidth = 0
+    let maxHeight = 0
+    if (lineItem.productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN]) {
+      if (lineItem.productOne && lineItem.productTwo) {
+        maxWidth = Math.min(lineItem.productOne.maxWidth, lineItem.productTwo.maxWidth)
+        maxHeight = Math.min(lineItem.productOne.maxHeight, lineItem.productTwo.maxHeight)
+      } else {
+        return null
+      }
+    } else {
+      if (lineItem.productOne) {
+        maxWidth = lineItem.productOne.maxWidth
+        maxHeight = lineItem.productOne.maxHeight
+      } else {
+        return null
+      }
+    }
+
     return (
       lineItem.productType &&
       <>
         <SelectorHeader order={3} label='Measurements' />
+        <SizeSelector
+          maxWidth={maxWidth}
+          maxHeight={maxHeight} />
       </>
     )
   }
