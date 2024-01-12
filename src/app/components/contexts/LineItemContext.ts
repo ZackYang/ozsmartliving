@@ -4,7 +4,15 @@ import { createContext, Dispatch, SetStateAction, useState } from "react";
 function CreateLineItemContext() {
   const lineItemContext = createContext<{ lineItem: LineItem, setLineItem: Dispatch<SetStateAction<LineItem>> }>(
     {
-      lineItem: {},
+      lineItem: {
+        productType: null,
+        productTypeOne: null,
+        productOne: null,
+        variantOne: null,
+        productTypeTwo: null,
+        productTwo: null,
+        variantTwo: null
+      },
       setLineItem: () => { }
     }
   );

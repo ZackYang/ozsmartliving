@@ -3,6 +3,7 @@ import '../globals.scss'
 import './common-style.scss'
 import Header from './components/Header'
 import { Inter } from 'next/font/google'
+import FooterComponent from './components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,7 +26,8 @@ export default function RootLayout({
         <div className="bg-zinc-200	w-full min-h-screen flex-col items-center justify-between relative">
           {children}
         </div>
+        <FooterComponent />
       </body>
-    </html>
+    </html >
   )
 }

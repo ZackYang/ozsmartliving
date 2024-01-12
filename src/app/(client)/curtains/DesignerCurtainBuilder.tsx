@@ -10,6 +10,8 @@ import { LineItem } from "@/lib/types/LineItem";
 import { Product } from "@/lib/types/Product";
 import { ProductTypeName, productTypeMap } from "@/lib/types/ProductType";
 import SizeSelector from "@/app/components/SizeSelector";
+import CurtainFittingSelector from "@/app/components/CurtainFittingSelector";
+import CurtainStackSelector from "@/app/components/CurtainStackSelector";
 
 export default function DesignerCurtainBuilder() {
   const [lineItem, setLineItem] = useState<LineItem>({
@@ -137,11 +139,30 @@ export default function DesignerCurtainBuilder() {
         <SelectorHeader order={3} label='Measurements' />
         <SizeSelector
           maxWidth={maxWidth}
-          maxHeight={maxHeight} />
+          maxHeight={maxHeight}
+          defaultName="Room 1 Window 1"
+        />
       </>
     )
   }
 
+  const renderCurtainStackSelector = () => {
+    return (
+      lineItem.productOne &&
+      <>
+        <CurtainStackSelector />
+      </>
+    )
+  }
+
+  const renderCurtainFittingSelector = () => {
+    return (
+      lineItem.productOne &&
+      <>
+        <CurtainFittingSelector />
+      </>
+    )
+  }
 
   return (
     <div className="grid grid-cols-5 justify-center ">
@@ -158,6 +179,16 @@ export default function DesignerCurtainBuilder() {
           }
           {
             renderSizeSelector()
+          }
+          {
+            lineItem.productOne &&
+            <SelectorHeader order={4} label='Build your own style' />
+          }
+          {
+            renderCurtainStackSelector()
+          }
+          {
+            renderCurtainFittingSelector()
           }
         </div>
         <div className='col-span-5 md:col-span-2 xl:col-span-1 mini-h-[100dvh]'>

@@ -11,151 +11,298 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 30;
-  height: 100px;
+  z-index: 1000;
 
-  .nav {
-    a {
-      position: relative;
-      font-weight: 500;
-      color: white;
+  .header-wrapper {
+    height: 100px;
+
+    .nav {
+      padding-top: 60px;
+
+      a {
+        position: relative;
+        font-weight: 500;
+        color: white;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: $purple-600;
+      }
+
+      a::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: $purple-600;
+        transform: scaleX(0);
+        transition: transform 0.1s ease;
+      }
+
+      a:hover::before {
+        transform: scaleX(1);
+      }
+    }
+
+    a.logo {
       text-decoration: none;
+
+      .lux {
+        font-size: 5.2rem;
+        color: white;
+        background-color: $purple-600;
+        line-height: 6rem;
+        padding: 0rem 1.3rem;
+        height: 100px;
+
+        :hover {
+          color: $teal-600 !important;
+        }
+      }
+
+      .curtains {
+        font-size: 2.1rem;
+        color: white;
+        height: 50px;
+        line-height: 5rem;
+        padding: 0 0.3rem;
+        vertical-align: baseline;
+
+        :hover {
+          color: $purple-600;
+        }
+      }
+
+      .blinds {
+        font-size: 2.1rem;
+        color: white;
+        height: 50px;
+        padding: 0 0.3rem;
+        margin-left: 1rem;
+        line-height: 2.1rem;
+      }
+
+      .lux:hover {
+        color: $teal-600;
+      }
+
+      .curtains:hover,
+      .blinds:hover {
+        color: $purple-600;
+      }
+    }
+  }
+
+  &.toggled {
+    .header-wrapper {
+      height: 30px;
+      animation-name: toggle-header;
+      animation-duration: 1s;
+
+      a#logo {
+        .lux {
+          font-size: 1.6rem;
+          line-height: 1.6rem;
+          padding: 0 0.3rem;
+          height: 30px;
+          animation-name: toggle-lux;
+          animation-duration: 1s;
+        }
+
+        .curtains {
+          font-size: 1.2rem;
+          line-height: 1.2rem;
+          padding: 0.3rem;
+          margin-top: 0.02rem;
+          height: 30px;
+          animation-name: toggle-curtains;
+          animation-duration: 1s;
+        }
+
+        .blinds {
+          font-size: 1.2rem;
+          line-height: 1rem;
+          padding: 0 0rem;
+          height: 30px;
+          margin-left: 4rem;
+          margin-top: -1.5rem;
+          animation-name: toggle-blinds;
+          animation-duration: 1s;
+        }
+      }
+
+      nav.nav {
+        animation-name: toggle-nav;
+        animation-duration: 1s;
+        padding-top: 0px;
+
+        a {
+          color: white;
+        }
+
+        a:hover {
+          color: $purple-600;
+        }
+
+        a::before {
+          background-color: $gray-100;
+        }
+
+        a:hover::before {
+          background-color: $purple-600;
+        }
+      }
+    }
+  }
+
+  &.reverse {
+    .header-wrapper {
+      height: 100px;
+      animation-name: toggle-header;
+      animation-duration: 1s;
+      animation-direction: reverse;
+
+      a#logo {
+        .lux {
+          font-size: 5.2rem;
+          line-height: 6rem;
+          padding: 0rem 1.3rem;
+          height: 100px;
+          animation-name: toggle-lux;
+          animation-duration: 1s;
+          animation-direction: reverse;
+        }
+
+        .curtains {
+          font-size: 2.1rem;
+          line-height: 5rem;
+          padding: 0 0.3rem;
+          height: 50px;
+          animation-name: toggle-curtains;
+          animation-duration: 1s;
+          animation-direction: reverse;
+        }
+
+        .blinds {
+          font-size: 2.1rem;
+          line-height: 2.1rem;
+          padding: 0 0.3rem;
+          height: 50px;
+          margin-left: 1rem;
+          margin-top: 0;
+          animation-name: toggle-blinds;
+          animation-duration: 1s;
+          animation-direction: reverse;
+        }
+      }
+
+      nav.nav {
+        animation-name: toggle-nav;
+        animation-duration: 1s;
+        animation-direction: reverse;
+        padding-top: 60px;
+
+        a {
+          color: white;
+        }
+
+        a:hover {
+          color: $purple-600;
+        }
+
+        a::before {
+          background-color: $purple-600;
+        }
+
+        a:hover::before {
+          background-color: $gray-100;
+        }
+      }
     }
 
-    a:hover {
-      color: $purple-600;
-    }
-
-    a::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 100%;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: $purple-600;
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    a:hover::before {
-      transform: scaleX(1);
-    }
   }
 }
 
 $teal-600: rgb(13, 148, 136);
 
-a#logo {
-  text-decoration: none;
-
-  .lux {
-    font-size: 5.2rem;
-    color: white;
-    background-color: rgb(76, 29, 149);
-    line-height: 6rem;
-    padding: 0rem 1.3rem;
-    height: 100px;
-  }
-
-  .curtains {
-    font-size: 2.1rem;
-    color: white;
-    background-color: $teal-600;
-    height: 50px;
-    line-height: 5rem;
-    padding: 0 0.3rem;
-    vertical-align: baseline;
-  }
-
-  .blinds {
-    font-size: 2.1rem;
-    color: white;
-    background-color: $teal-600;
-    height: 50px;
-    padding: 0 0.3rem;
-    margin-left: 1rem;
-    line-height: 2.1rem;
-  }
-
-  :hover {
-    color: $gray-100
-  }
-}
-
-img.logo.toggled {
-  width: 150px;
-  animation-name: toggle-header;
-  animation-duration: 0.3s;
-}
-
-div.narrow {
-  padding-top: 0;
-  padding-bottom: 0;
-  animation-name: toggle-content;
-  animation-duration: 0.3s;
-}
-
-@keyframes toggle-content {
+@keyframes toggle-nav {
   from {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 60px;
   }
 
   to {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: 0px;
   }
 }
 
 @keyframes toggle-header {
   from {
-    width: 300px;
+    height: 100px;
   }
 
   to {
-    width: 150px;
+    height: 30px;
   }
 }
 
-.hideUserMenu {
-  display: none;
-}
-
-.userIconActive {
-  color: $teal-600;
-  background-color: white;
-  transform: rotate(25deg);
-  animation-name: select-icon;
-  animation-duration: 300ms;
-}
-
-@keyframes select-icon {
+@keyframes toggle-lux {
   from {
-    background-color: $teal-600;
-    transform: rotate(0deg);
+    font-size: 5.2rem;
+    line-height: 6rem;
+    padding: 0rem 1.3rem;
+    height: 100px;
   }
 
   to {
-    background-color: white;
-    transform: rotate(25deg);
+    font-size: 1.6rem;
+    line-height: 1.6rem;
+    padding: 0 0.3rem;
+    height: 30px;
   }
-
 }
 
-.showUserMenu {
-  display: block;
-  animation-name: toggle-user-menu;
-  animation-duration: 0.3s;
-}
-
-@keyframes toggle-user-menu {
+@keyframes toggle-curtains {
   from {
-    left: 100%;
+    font-size: 2.1rem;
+    line-height: 5rem;
+    padding: 0 0.3rem;
+    height: 50px;
   }
 
   to {
-    left: 0;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    padding: 0.3rem;
+    margin-top: 0.02rem;
+    height: 30px;
   }
+}
+
+@keyframes toggle-blinds {
+  from {
+    font-size: 2.1rem;
+    height: 50px;
+    padding: 0 0.3rem;
+    margin-left: 1rem;
+    line-height: 2.1rem;
+    margin-top: 0;
+  }
+
+  to {
+    font-size: 1.2rem;
+    line-height: 1rem;
+    padding: 0 0rem;
+    height: 30px;
+    margin-left: 4rem;
+    margin-top: -1.5rem;
+  }
+}
+
+body {
+  padding-top: 100px;
+  position: relative
 }
