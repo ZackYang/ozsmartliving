@@ -1,3 +1,4 @@
+import { curtainFinishTypekey } from "./CurtainFinish";
 import { curtainFittingTypekey } from "./CurtainFitting";
 import { curtainHeadTypekey } from "./CurtainHead";
 import { curtainStackTypekey } from "./CurtainStack";
@@ -19,7 +20,7 @@ export type LineItem = {
   curtainStackTypeKey?: curtainStackTypekey | null,
   curtainFittingTypeKey?: curtainFittingTypekey | null,
   curtainHeadTypeKey?: curtainHeadTypekey | null,
-  curtainFinish?: 'off-floor' | 'touch-floor' | 'puddle',
+  curtainFinishTypeKey?: curtainFinishTypekey | null,
   curtainHem?: 'lead' | '10mm' | '70mm' | '100mm',
   trackType?: 'standard' | 'low-profile' | 'double-track' | 'motorised' | 'curved' | 'bay-window' | 'corner-window' | 'low-profile-double-track' | 'motorised-double-track',
   trackColor?: 'white' | 'black' | 'silver' | 'bronze' | 'anodised',
