@@ -1,4 +1,5 @@
 import { curtainFittingTypekey } from "./CurtainFitting";
+import { curtainHeadTypekey } from "./CurtainHead";
 import { curtainStackTypekey } from "./CurtainStack";
 import { Product } from "./Product";
 import { ProductType } from "./ProductType";
@@ -17,6 +18,7 @@ export type LineItem = {
   mountType?: 'ceiling' | 'wall',
   curtainStackTypeKey?: curtainStackTypekey | null,
   curtainFittingTypeKey?: curtainFittingTypekey | null,
+  curtainHeadTypeKey?: curtainHeadTypekey | null,
   curtainFinish?: 'off-floor' | 'touch-floor' | 'puddle',
   curtainHem?: 'lead' | '10mm' | '70mm' | '100mm',
   trackType?: 'standard' | 'low-profile' | 'double-track' | 'motorised' | 'curved' | 'bay-window' | 'corner-window' | 'low-profile-double-track' | 'motorised-double-track',

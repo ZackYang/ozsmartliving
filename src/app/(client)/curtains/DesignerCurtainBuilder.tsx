@@ -12,6 +12,7 @@ import { ProductTypeName, productTypeMap } from "@/lib/types/ProductType";
 import SizeSelector from "@/app/components/SizeSelector";
 import CurtainFittingSelector from "@/app/components/CurtainFittingSelector";
 import CurtainStackSelector from "@/app/components/CurtainStackSelector";
+import CurtainHeadSelector from "@/app/components/CurtainHeadSelector";
 
 export default function DesignerCurtainBuilder() {
   const [lineItem, setLineItem] = useState<LineItem>({
@@ -164,6 +165,15 @@ export default function DesignerCurtainBuilder() {
     )
   }
 
+  const renderCurtainHeadSelector = () => {
+    return (
+      lineItem.productOne &&
+      <>
+        <CurtainHeadSelector />
+      </>
+    )
+  }
+
   return (
     <div className="grid grid-cols-5 justify-center ">
       <lineItemContext.Provider value={{ lineItem, setLineItem }}>
@@ -189,6 +199,9 @@ export default function DesignerCurtainBuilder() {
           }
           {
             renderCurtainFittingSelector()
+          }
+          {
+            renderCurtainHeadSelector()
           }
         </div>
         <div className='col-span-5 md:col-span-2 xl:col-span-1 mini-h-[100dvh]'>
