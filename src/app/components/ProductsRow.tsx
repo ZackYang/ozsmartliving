@@ -22,7 +22,7 @@ export default function RenderProductsRow(
 
   return (
     <>
-      <div key={index} className={`grid grid-cols-3 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 3xl:grid-cols-9 4xl:grid-cols-10`}>
+      <div key={index} className={`grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-8 4xl:grid-cols-8`}>
         {
           products.map((product) => {
             return (

@@ -2,6 +2,7 @@ import { curtainFinishTypekey } from "./CurtainFinish";
 import { curtainFittingTypekey } from "./CurtainFitting";
 import { curtainHeadTypekey } from "./CurtainHead";
 import { curtainStackTypekey } from "./CurtainStack";
+import { curtainTrackTypekey } from "./CurtainTrack";
 import { Product } from "./Product";
 import { ProductType } from "./ProductType";
 import { Variant } from "./Variant";
@@ -16,14 +17,12 @@ export type LineItem = {
   variantTwo: Variant | null,
   width?: number,
   height?: number,
-  mountType?: 'ceiling' | 'wall',
   curtainStackTypeKey?: curtainStackTypekey | null,
   curtainFittingTypeKey?: curtainFittingTypekey | null,
   curtainHeadTypeKey?: curtainHeadTypekey | null,
   curtainFinishTypeKey?: curtainFinishTypekey | null,
+  curtainTrackTypeKey?: curtainTrackTypekey | null,
   curtainHem?: 'lead' | '10mm' | '70mm' | '100mm',
-  trackType?: 'standard' | 'low-profile' | 'double-track' | 'motorised' | 'curved' | 'bay-window' | 'corner-window' | 'low-profile-double-track' | 'motorised-double-track',
-  trackColor?: 'white' | 'black' | 'silver' | 'bronze' | 'anodised',
   quantity?: number,
   price?: number,
 }

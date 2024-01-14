@@ -1,12 +1,12 @@
 import { Card } from "flowbite-react";
 import { getUrl } from "./OzSmartImage";
-import { curtainFinishTypeList } from "@/lib/types/CurtainFinish";
+import { curtainTrackTypeList } from "@/lib/types/CurtainTrack";
 import { PiCheckCircleFill } from "react-icons/pi";
 import { useContext } from "react";
 import lineItemContext from "./contexts/LineItemContext";
 import OzCard from "./sharedComponents/OzCard";
 
-export default function CurtainFinishSelector() {
+export default function CurtainTrackSelector() {
   const { lineItem, setLineItem } = useContext(lineItemContext)
 
   return (
@@ -18,22 +18,24 @@ export default function CurtainFinishSelector() {
           </span>
         </h5>
       </div >
-      <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 p-1">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 p-1">
 
         {
-          curtainFinishTypeList.map((curtainFinishType) => {
+          curtainTrackTypeList.map((curtainTrackType) => {
             return (
               <OzCard
-                key={curtainFinishType.key}
-                imageUrl={curtainFinishType.publicId}
-                title={curtainFinishType.name}
-                currentKey={curtainFinishType.key}
-                selectedKey={lineItem.curtainFinishTypeKey}
+                key={curtainTrackType.key}
+                imageUrl={curtainTrackType.publicId}
+                imageWidth={150}
+                imageHeight={150}
+                title={curtainTrackType.name}
+                currentKey={curtainTrackType.key}
+                selectedKey={lineItem.curtainTrackTypeKey}
                 onClick={
                   () => setLineItem((prev) => {
                     return {
                       ...prev,
-                      curtainFinishTypeKey: curtainFinishType.key
+                      curtainTrackTypeKey: curtainTrackType.key
                     }
                   })
                 }

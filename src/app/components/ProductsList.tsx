@@ -10,14 +10,14 @@ export default function ProductsList({
   products: Product[]
 }) {
   const responsive = {
-    xs: 3,
+    xs: 4,
     sm: 5,
-    md: 4,
-    lg: 6,
+    md: 6,
+    lg: 7,
     xl: 7,
-    '2xl': 8,
-    '3xl': 9,
-    '4xl': 10,
+    '2xl': 7,
+    '3xl': 8,
+    '4xl': 8,
   }
 
   const colNumber = responsive[userMediaSize() as keyof typeof responsive];

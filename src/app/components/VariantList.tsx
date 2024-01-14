@@ -25,9 +25,9 @@ export default function VariantList({
     <div
       className={
         `
-        grid grid-cols-3 xs:grid-cols-3 sm:grid-cols-4
-        md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
-        2xl:grid-cols-6 3xl:grid-cols-6 4xl:grid-cols-6
+        grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-6
+        md:grid-cols-7 lg:grid-cols-10 xl:grid-cols-8
+        2xl:grid-cols-8 3xl:grid-cols-8 4xl:grid-cols-8
         rounded gap-1 p-1
         ` + className
       }
@@ -51,7 +51,7 @@ export default function VariantList({
               />
               <div
                 className={
-                  `absolute right-3 bottom-3 text-3xl detail-icon`}
+                  `absolute right-3 bottom-3 text-2xl detail-icon`}
                 onClick={() => { setDisplayedVariant(variant) }}>
                 <FaSearchPlus />
               </div>
