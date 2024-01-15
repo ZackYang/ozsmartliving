@@ -10,11 +10,17 @@ import CurtainTypePanel from "./CurtainTypePanel";
 import React from 'react';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
+import { de } from "@faker-js/faker";
 
 export default function CurtainTypeSelector() {
-  const wrapper = window.document.querySelector('.carousel');
+  let defaultWidth = 1024;
 
-  const [width, setWidth] = React.useState((wrapper as HTMLElement)?.offsetWidth);
+  if (typeof window !== 'undefined') {
+    const wrapper = window.document.querySelector('.carousel');
+    defaultWidth = (wrapper as HTMLElement)?.offsetWidth;
+  }
+
+  const [width, setWidth] = React.useState(defaultWidth);
 
   React.useEffect(() => {
     const wrapper = window.document.querySelector('.carousel');
