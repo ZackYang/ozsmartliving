@@ -37,4 +37,5 @@ next-env.d.ts
 .production.env
 
 .vercel
-.env
+
+.vercel
