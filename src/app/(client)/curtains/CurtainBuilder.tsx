@@ -15,6 +15,8 @@ import CurtainStackSelector from "@/app/components/CurtainStackSelector";
 import CurtainHeadSelector from "@/app/components/CurtainHeadSelector";
 import CurtainFinishSelector from "@/app/components/CurtainFinishSelector";
 import CurtainTrackSelector from "@/app/components/CurtainTrackSelector";
+import CommonSelector from "@/app/components/sharedComponents/CommonSelector";
+import { curtainFinishTypes, curtainFittingTypes, curtainHeadTypes, curtainStackTypes, curtainTrackTypes } from "@/lib/types/CommonSelectorOption";
 
 export default function CurtainBuilder() {
   const [lineItem, setLineItem] = useState<LineItem>({
@@ -41,7 +43,7 @@ export default function CurtainBuilder() {
     })
   }, [lineItem.productType])
 
-  const renderProductTypeSelector = () => {
+  const ProductTypeSelector = () => {
     return (
       <>
         <SelectorHeader order={1} label='Choose your curtain type' />
@@ -50,7 +52,7 @@ export default function CurtainBuilder() {
     )
   }
 
-  const renderProductOneSelector = () => {
+  const ProductOneSelectorWrapper = () => {
     return (
       lineItem.productTypeOne &&
       <>
@@ -84,7 +86,7 @@ export default function CurtainBuilder() {
     )
   }
 
-  const renderProductTwoSelector = () => {
+  const ProductTwoSelectorWrapper = () => {
     return (
       lineItem.productTypeTwo &&
       <>
@@ -117,7 +119,7 @@ export default function CurtainBuilder() {
     )
   }
 
-  const renderSizeSelector = () => {
+  const SizeSelectorWrapper = () => {
     let maxWidth = 0
     let maxHeight = 0
     if (lineItem.productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN]) {
@@ -149,88 +151,72 @@ export default function CurtainBuilder() {
     )
   }
 
-  const renderCurtainStackSelector = () => {
+  const CurtainStackSelectorWrapper = () => {
     return (
       lineItem.productOne &&
       <>
-        <CurtainStackSelector />
+        <CommonSelector options={curtainStackTypes} title="Curtain Stack" />
       </>
     )
   }
 
-  const renderCurtainFittingSelector = () => {
+  const CurtainFittingSelectorWrapper = () => {
     return (
       lineItem.productOne &&
       <>
-        <CurtainFittingSelector />
+        <CommonSelector options={curtainFittingTypes} title="Curtain Fitting" />
       </>
     )
   }
 
-  const renderCurtainHeadSelector = () => {
+  const CurtainHeadSelectorWrapper = () => {
     return (
       lineItem.productOne &&
       <>
-        <CurtainHeadSelector />
+        <CommonSelector options={curtainHeadTypes} title="Curtain Head" />
       </>
     )
   }
 
-  const renderCurtainFinishSelector = () => {
+  const CurtainFinishSelectorWrapper = () => {
     return (
       lineItem.productOne &&
       <>
-        <CurtainFinishSelector />
+        <CommonSelector options={curtainFinishTypes} title="Curtain Finish" />
       </>
     )
   }
 
-  const renderCurtainTrackSelector = () => {
+  const CurtainTrackSelectorWrapper = () => {
     return (
       lineItem.productOne &&
       <>
-        <CurtainTrackSelector />
+        <CommonSelector options={curtainTrackTypes} title="Curtain Track" />
       </>
     )
   }
 
   return (
-    <div className="grid grid-cols-5 justify-center ">
+    <div className="flex flex:col lg:flex-row gap-1">
       <lineItemContext.Provider value={{ lineItem, setLineItem }}>
-        <div className='col-span-5 xl:col-span-3 xl:col-span-4 mini-h-[100dvh]'>
-          {
-            renderProductTypeSelector()
-          }
-          {
-            renderProductOneSelector()
-          }
-          {
-            renderProductTwoSelector()
-          }
-          {
-            renderSizeSelector()
-          }
+        <div className='grow mini-h-[100dvh]'>
+
+          <CurtainTypeSelector />
+          <ProductOneSelectorWrapper />
+          <ProductTwoSelectorWrapper />
+          <SizeSelectorWrapper />
           {
             lineItem.productOne &&
             <SelectorHeader order={4} label='Build your own style' />
           }
-          {
-            renderCurtainStackSelector()
-          }
-          {
-            renderCurtainFittingSelector()
-          }
-          {
-            renderCurtainHeadSelector()
-          }
-          {
-            renderCurtainFinishSelector()
-          }
-          {
-            renderCurtainTrackSelector()
-          }
+
+          <CurtainStackSelectorWrapper />
+          <CurtainFittingSelectorWrapper />
+          <CurtainHeadSelectorWrapper />
+          <CurtainFinishSelectorWrapper />
+          <CurtainTrackSelectorWrapper />
         </div>
-        <div className='col-span-5 xl:col-span-2 xl:col-span-1 mini-h-[100dvh]'>
+        <div className='mini-h-[100dvh]'>
           <Summary lineItem={lineItem} />
         </div>
       </lineItemContext.Provider>

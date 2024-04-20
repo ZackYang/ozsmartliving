@@ -2,7 +2,7 @@ import CurtainBuilder from "./CurtainBuilder";
 
 export default function Curtains() {
   return (
-    <div className="container mx-auto">
+    <div className="container">
       <CurtainBuilder />
     </div>
   )

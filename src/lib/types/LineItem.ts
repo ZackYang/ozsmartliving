@@ -16,7 +16,7 @@ export type LineItem = {
   productTwo: Product | null,
   variantTwo: Variant | null,
   width?: number,
-  height?: number,
+  height?: number
   curtainStackTypeKey?: curtainStackTypekey | null,
   curtainFittingTypeKey?: curtainFittingTypekey | null,
   curtainHeadTypeKey?: curtainHeadTypekey | null,
@@ -25,4 +25,6 @@ export type LineItem = {
   curtainHem?: 'lead' | '10mm' | '70mm' | '100mm',
   quantity?: number,
   price?: number,
+  totalPrice?: number,
+  gst?: number
 }

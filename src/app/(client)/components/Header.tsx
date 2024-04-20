@@ -14,7 +14,6 @@ const nickainley = localFont({ src: "../../../assets/Nickainley-Normal.otf" })
 export default function Header() {
   useEffect(() => {
     window.addEventListener('scroll', () => {
-      console.log(window.scrollY);
       if (window.scrollY > 10) {
         document.getElementById('header')?.classList.add('toggled');
         // setTimeout(() => {

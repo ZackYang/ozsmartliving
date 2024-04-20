@@ -25,10 +25,7 @@ export default function VariantList({
     <div
       className={
         `
-        grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-6
-        md:grid-cols-7 lg:grid-cols-10 xl:grid-cols-8
-        2xl:grid-cols-8 3xl:grid-cols-8 4xl:grid-cols-8
-        rounded gap-1 p-1
+        flex flex-row flex-wrap rounded gap-1 p-1
         ` + className
       }
     >
@@ -37,7 +34,7 @@ export default function VariantList({
           return (
             <div
               key={variant.id}
-              className={`w-full group cursor-pointer rounded p-1 relative p-2`}
+              className={`w-full group cursor-pointer rounded p-1 relative max-w-[100px]`}
             >
               <OzSmartImage
                 src={variant.coverImage}

@@ -80,6 +80,7 @@ export default function VariantModel(
                       <div
                         key={image.id}
                         className="flex justify-center"
+                        tabIndex={image.id}
                       >
                         <OzSmartImage
                           src={image}

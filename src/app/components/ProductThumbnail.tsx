@@ -1,19 +1,23 @@
 import { Product } from '@/lib/types/Product';
 import OzSmartImage from './OzSmartImage';
 
+interface Props {
+  className?: string
+  onClick?: () => void
+  selected?: boolean
+  product: Product
+}
+
 export default function ProductThumbnail({
   product,
   selected,
   onClick,
-}: {
-  product: Product,
-  selected?: boolean,
-  onClick: () => void
-}) {
+  className
+}: Props) {
   return (
     <div
       key={product.id}
-      className='m-1'
+      className={`w-full flex-initial ${className}`}
       onClick={onClick}
     >
       <div className={`${selected && 'border-teal-600'} w-full group justify-center border-2 hover:border-teal-600 rounded-md relative mb-2`}>

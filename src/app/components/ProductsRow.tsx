@@ -22,7 +22,7 @@ export default function RenderProductsRow(
 
   return (
     <>
-      <div key={index} className={`grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-8 4xl:grid-cols-8`}>
+      <div key={index} className={`flex flex-row`}>
         {
           products.map((product) => {
             return (
@@ -33,14 +33,16 @@ export default function RenderProductsRow(
                   onProductSelected(product)
                   onVariantSelected(null)
                 }}
-                product={product} />
+                product={product}
+                className="max-w-[100px] m-1 cursor-pointer"
+              />
             )
           })
         }
       </div>
       {
         selectedProduct && products.map((product) => { return product.id }).includes(selectedProduct.id) && (
-          <div className='flex flex-row justify-center'>
+          <div className='flex flex-row'>
             <div className='text-3xl text-teal-500'>
               {
                 products.map((product) => {

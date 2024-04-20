@@ -24,18 +24,16 @@ export default function ProductsList({
 
   return (
     <>
-      <div>
-        {
-          _.chunk(products, colNumber).map((products, index) => {
-            return (
-              <ProductsRow
-                key={index}
-                products={products}
-                index={index} />
-            )
-          })
-        }
-      </div>
+      {
+        _.chunk(products, colNumber).map((products, index) => {
+          return (
+            <ProductsRow
+              key={index}
+              products={products}
+              index={index} />
+          )
+        })
+      }
     </>
   );
 }
