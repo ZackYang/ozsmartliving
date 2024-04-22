@@ -66,12 +66,12 @@ export default function Summary(
   }, [])
 
   return (
-    <div className={`sticky top-0 flex flex-row p-12 py-3 bg-white shadow-md h-dvh`}>
+    <div className={`sticky top-0 flex flex-row px-12 py-3 bg-white shadow-md h-dvh`}>
       <div className="w-full">
         {
           lineItem.productType &&
           <div className="flex flex-col">
-            <div className="flex text-xl p-2 justify-center mt-4 mb-0 font-semibold text-gray-600">
+            <div className="flex text-xl p-1 justify-center mt-0 mb-0 font-semibold text-gray-600">
               {_.upperCase(lineItem.productType?.name)}
             </div>
           </div>
@@ -104,76 +104,91 @@ export default function Summary(
             </div>
           </div>
         }
+        <DividingLine />
         {
           <div className="flex flex-col">
-            <DividingLine />
+
             <div className="flex flex-row text-sm justify-between">
               <div>WIDTH: </div>
               <div>{lineItem.width} mm</div>
             </div>
+            <DividingLine />
           </div>
         }
         {
           <div className="flex flex-col">
-            <DividingLine />
+
             <div className="flex flex-row text-sm justify-between">
               <div>HEIGHT: </div>
               <div>{lineItem.height} mm</div>
             </div>
+            <DividingLine />
           </div>
         }
         {
-          lineItem.curtainStackTypeKey &&
+          lineItem.curtainStackType &&
           <div className="flex flex-col">
-            <div className="text-lg font-bold">
-              Stack: {_.startCase(lineItem.curtainStackTypeKey)}
+            <div className="flex flex-row text-sm justify-between">
+              <div className="font-semibold">STACK:</div>
+              <div>{_.startCase(lineItem.curtainStackType?.name)}</div>
             </div>
+            <DividingLine />
           </div>
         }
         {
-          lineItem.curtainFittingTypeKey &&
+          lineItem.curtainFittingType &&
           <div className="flex flex-col">
-            <div className="text-lg font-bold">
-              Fitting: {_.startCase(lineItem.curtainFittingTypeKey)}
+            <div className="flex flex-row text-sm justify-between">
+              <div className="font-semibold">FITTING:</div>
+              <div>{_.startCase(lineItem.curtainFittingType?.name)}</div>
             </div>
+            <DividingLine />
           </div>
         }
         {
-          lineItem.curtainHeadTypeKey &&
+          lineItem.curtainHeadType &&
           <div className="flex flex-col">
-            <div className="text-lg font-bold">
-              Heading: {_.startCase(lineItem.curtainHeadTypeKey)}
+            <div className="flex flex-row text-sm justify-between">
+              <div className="font-semibold">HEAD:</div>
+              <div>{_.startCase(lineItem.curtainHeadType?.name)}</div>
             </div>
+            <DividingLine />
           </div>
         }
         {
-          lineItem.curtainFinishTypeKey &&
+          lineItem.curtainFinishType &&
           <div className="flex flex-col">
-            <div className="text-lg font-bold">
-              Finish: {_.startCase(lineItem.curtainFinishTypeKey)}
+            <div className="flex flex-row text-sm justify-between">
+              <div className="font-semibold">FINISH:</div>
+              <div>{_.startCase(lineItem.curtainFinishType?.name)}</div>
             </div>
+            <DividingLine />
           </div>
         }
         {
-          lineItem.curtainTrackTypeKey &&
+          lineItem.curtainTrackType &&
           <div className="flex flex-col">
-            <div className="text-lg font-bold">
-              Track: {_.startCase(lineItem.curtainTrackTypeKey)}
+            <div className="flex flex-row text-sm justify-between">
+              <div className="font-semibold">TRACK:</div>
+              <div>{_.startCase(lineItem.curtainTrackType?.name)}</div>
             </div>
+            <DividingLine />
           </div>
         }
         {
           lineItem.curtainHem &&
           <div className="flex flex-col">
-            <div className="text-lg font-bold">
-              Hem: {_.startCase(lineItem.curtainHem)}
+            <div className="flex flex-row text-sm justify-between">
+              <div className="font-semibold">HEM:</div>
+              <div>{_.startCase(lineItem.curtainHem)}</div>
             </div>
+            <DividingLine />
           </div>
         }
         {
           lineItem.quantity &&
           <div className="flex flex-col">
-            <div className="text-lg font-bold">
+            <div className="">
               Quantity: {lineItem.quantity}
             </div>
           </div>
@@ -181,7 +196,7 @@ export default function Summary(
         {
           lineItem.price &&
           <div className="flex flex-col">
-            <div className="text-lg font-bold">
+            <div className="">
               Price: ${lineItem.price}
             </div>
           </div>
@@ -189,7 +204,7 @@ export default function Summary(
         {
           lineItem.totalPrice &&
           <div className="flex flex-col">
-            <div className="text-lg font-bold">
+            <div className="">
               Total Price: ${lineItem.totalPrice}
             </div>
           </div>

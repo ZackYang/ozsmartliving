@@ -1,8 +1,8 @@
-import { curtainFinishTypekey } from "./CurtainFinish";
-import { curtainFittingTypekey } from "./CurtainFitting";
-import { curtainHeadTypekey } from "./CurtainHead";
-import { curtainStackTypekey } from "./CurtainStack";
-import { curtainTrackTypekey } from "./CurtainTrack";
+import { CurtainFinishType } from "./CurtainFinish";
+import { CurtainFittingType } from "./CurtainFitting";
+import { CurtainHeadType } from "./CurtainHead";
+import { CurtainStackType } from "./CurtainStack";
+import { CurtainTrackType } from "./CurtainTrack";
 import { Product } from "./Product";
 import { ProductType } from "./ProductType";
 import { Variant } from "./Variant";
@@ -17,12 +17,12 @@ export type LineItem = {
   variantTwo: Variant | null,
   width?: number,
   height?: number
-  curtainStackTypeKey?: curtainStackTypekey | null,
-  curtainFittingTypeKey?: curtainFittingTypekey | null,
-  curtainHeadTypeKey?: curtainHeadTypekey | null,
-  curtainFinishTypeKey?: curtainFinishTypekey | null,
-  curtainTrackTypeKey?: curtainTrackTypekey | null,
-  curtainHem?: 'lead' | '10mm' | '70mm' | '100mm',
+  curtainStackType?: CurtainStackType | null,
+  curtainFittingType?: CurtainFittingType | null,
+  curtainHeadType?: CurtainHeadType | null,
+  curtainFinishType?: CurtainFinishType | null,
+  curtainTrackType?: CurtainTrackType | null,
+  curtainHem?: 'lead' | '10mm' | '70mm' | '100mm' | null,
   quantity?: number,
   price?: number,
   totalPrice?: number,

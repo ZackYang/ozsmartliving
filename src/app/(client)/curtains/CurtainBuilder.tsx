@@ -13,6 +13,11 @@ import SizeSelector from "@/app/components/SizeSelector";
 import CommonSelector from "@/app/components/sharedComponents/CommonSelector";
 import { curtainFinishTypes, curtainFittingTypes, curtainHeadTypes, curtainStackTypes, curtainTrackTypes } from "@/lib/types/CommonSelectorOption";
 import { Variant } from "@/lib/types/Variant";
+import { CurtainStackType } from "@/lib/types/CurtainStack";
+import { CurtainFittingType } from "@/lib/types/CurtainFitting";
+import { CurtainHeadType } from "@/lib/types/CurtainHead";
+import { CurtainFinishType } from "@/lib/types/CurtainFinish";
+import { CurtainTrackType } from "@/lib/types/CurtainTrack";
 
 export default function CurtainBuilder() {
   const [lineItem, setLineItem] = useState<LineItem>({
@@ -23,6 +28,14 @@ export default function CurtainBuilder() {
     productTwo: null,
     variantOne: null,
     variantTwo: null,
+    width: 0,
+    height: 0,
+    roomName: null,
+    curtainStackType: null,
+    curtainFittingType: null,
+    curtainHeadType: null,
+    curtainFinishType: null,
+    curtainTrackType: null,
   })
 
   const [productType, setProductType] = useState<ProductType | null>(null)
@@ -35,6 +48,12 @@ export default function CurtainBuilder() {
   const [width, setWidth] = useState<number>(0)
   const [height, setHeight] = useState<number>(0)
   const [roomName, setRoomName] = useState<string | null>()
+  const [curtainStackType, setCurtainStackType] = useState<CurtainStackType | null>(null)
+  const [curtainFittingType, setCurtainFittingType] = useState<CurtainFittingType | null>(null)
+  const [curtainHeadType, setCurtainHeadType] = useState<CurtainHeadType | null>(null)
+  const [curtainFinishType, setCurtainFinishType] = useState<CurtainFinishType | null>(null)
+  const [curtainTrackType, setCurtainTrackType] = useState<CurtainTrackType | null>(null)
+  const [curtainHem, setCurtainHem] = useState<'lead' | '10mm' | '70mm' | '100mm' | null>(null)
 
   const [productOneSelectableProducts, setProductOneSelectableProducts] = useState<Product[]>([])
   const [productTwoSelectableProducts, setProductTwoSelectableProducts] = useState<Product[]>([])
@@ -57,8 +76,31 @@ export default function CurtainBuilder() {
       width,
       height,
       roomName,
+      curtainStackType,
+      curtainFittingType,
+      curtainHeadType,
+      curtainFinishType,
+      curtainTrackType,
+      curtainHem,
     })
-  }, [productType, productTypeOne, productTypeTwo, productOne, productTwo, variantOne, variantTwo, width, height, roomName])
+  }, [
+    productType,
+    productTypeOne,
+    productTypeTwo,
+    productOne,
+    productTwo,
+    variantOne,
+    variantTwo,
+    width,
+    height,
+    roomName,
+    curtainStackType,
+    curtainFittingType,
+    curtainHeadType,
+    curtainFinishType,
+    curtainTrackType,
+    curtainHem,
+  ])
 
   useEffect(() => {
     if (productTypeOne) {
@@ -127,49 +169,24 @@ export default function CurtainBuilder() {
     )
   }, [productType])
 
-  const CurtainStackSelectorWrapper = () => {
-    return (
-      lineItem.productOne &&
-      <>
-        <CommonSelector key={'stack'} options={curtainStackTypes} title="Curtain Stack" />
-      </>
-    )
-  }
-
-  const CurtainFittingSelectorWrapper = () => {
-    return (
-      lineItem.productOne &&
-      <>
-        <CommonSelector options={curtainFittingTypes} title="Curtain Fitting" />
-      </>
-    )
-  }
-
-  const CurtainHeadSelectorWrapper = () => {
-    return (
-      lineItem.productOne &&
-      <>
-        <CommonSelector options={curtainHeadTypes} title="Curtain Head" />
-      </>
-    )
-  }
-
-  const CurtainFinishSelectorWrapper = () => {
-    return (
-      lineItem.productOne &&
-      <>
-        <CommonSelector options={curtainFinishTypes} title="Curtain Finish" />
-      </>
-    )
-  }
-
-  const CurtainTrackSelectorWrapper = () => {
-    return (
-      lineItem.productOne &&
-      <>
-        <CommonSelector options={curtainTrackTypes} title="Curtain Track" />
-      </>
-    )
+  function resetAllState() {
+    setProductType(null)
+    setProductTypeOne(null)
+    setProductTypeTwo(null)
+    setProductOne(null)
+    setProductTwo(null)
+    setVariantOne(null)
+    setVariantTwo(null)
+    // Except for width, height, roomName
+    // setWidth(0)
+    // setHeight(0)
+    // setRoomName(null)
+    setCurtainStackType(null)
+    setCurtainFittingType(null)
+    setCurtainHeadType(null)
+    setCurtainFinishType(null)
+    setCurtainTrackType(null)
+    setCurtainHem(null)
   }
 
   return (
@@ -177,9 +194,10 @@ export default function CurtainBuilder() {
       <div className='basis-3/4 flex flex-col mini-h-[100dvh]'>
         <CurtainTypeSelector
           selectedProductType={productType}
-          onSelected={(productType) => {
-            if (productType) {
-              setProductType(productType)
+          onSelected={(newProductType) => {
+            if (newProductType && newProductType.typeName !== productType?.typeName) {
+              resetAllState
+              setProductType(newProductType)
             }
           }}
         />
@@ -190,11 +208,11 @@ export default function CurtainBuilder() {
           lineItem.productOne &&
           <SelectorHeader order={4} label='Build your own style' />
         }
-        <CurtainStackSelectorWrapper />
-        <CurtainFittingSelectorWrapper />
-        <CurtainHeadSelectorWrapper />
-        <CurtainFinishSelectorWrapper />
-        <CurtainTrackSelectorWrapper />
+        <CommonSelector onSelected={setCurtainStackType} key={'stack'} options={curtainStackTypes} title="Curtain Stack" />
+        <CommonSelector onSelected={setCurtainFittingType} key={'fitting'} options={curtainFittingTypes} title="Curtain Fitting" />
+        <CommonSelector onSelected={setCurtainHeadType} key={'head'} options={curtainHeadTypes} title="Curtain Head" />
+        <CommonSelector onSelected={setCurtainFinishType} key={'finish'} options={curtainFinishTypes} title="Curtain Finish" />
+        <CommonSelector onSelected={setCurtainTrackType} key={'track'} options={curtainTrackTypes} title="Curtain Track" />
       </div>
       <div className='basis-1/4'>
         <Summary lineItem={lineItem} />

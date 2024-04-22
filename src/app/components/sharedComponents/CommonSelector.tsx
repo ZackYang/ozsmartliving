@@ -64,9 +64,9 @@ export default function CommonSelector({
 									handleSelected(option);
 								}}
 							>
-								<OzSmartImage src={option.image} alt={option.label} width={150} height={150} />
+								<OzSmartImage src={option.image} alt={option.name} width={150} height={150} />
 								<div className='text-center mt-2 font-semibold'>
-									{option.label}
+									{option.name}
 								</div>
 								{
 									selectedOption?.value === option.value && showCheckedIcon()

@@ -1,4 +1,5 @@
 export type CurtainStackType = {
+  key: curtainStackTypekey,
   name: string,
   publicId: string,
 }
