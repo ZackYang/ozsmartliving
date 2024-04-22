@@ -2,18 +2,45 @@ import { LineItem } from "@/lib/types/LineItem";
 import CurtainTypePanel from "./CurtainTypePanel";
 import OzSmartImage from "./OzSmartImage";
 import _ from 'lodash';
+import { useEffect, useState } from "react";
+import { Product } from "@/lib/types/Product";
+import { Variant } from "@/lib/types/Variant";
+import DividingLine from "./sharedComponents/DividingLine";
 
-function renderProductType(
-  lineItem: LineItem
-) {
-  return lineItem.productType && (
-    <OzSmartImage
-      src={lineItem.productType.src}
-      alt={lineItem.productType.name}
-      width={100}
-      height={100}
-      crop='scale'
-      className='object-contain' />
+function VariantDisplay({
+  productName,
+  lineItem,
+  product,
+  variant,
+}: {
+  productName?: string,
+  lineItem?: LineItem | null,
+  product?: Product | null,
+  variant?: Variant | null
+}) {
+  return (
+    lineItem && product && variant &&
+    <div className="flex flex-col">
+      <DividingLine />
+      <div>
+        <span className="text-md font-bold">
+          {productName}
+        </span>
+      </div>
+      <div className="w-full flex justify-between">
+        <OzSmartImage src={variant.coverImage} alt={variant.name || ""} width={60} height={60} crop='scale' className='rounded-md' />
+        <div className="basis-4/5 flex flex-col">
+          <div className="flex justify-end">
+            <span>
+              {_.startCase(product.type)}
+            </span>
+          </div>
+          <div className="flex justify-end">
+            <span className="font-bold text-sm">{product.name}</span> / <span className="text-gray-700 text-sm">{_.startCase(variant.name)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -25,130 +52,150 @@ export default function Summary(
   }
 
 ) {
-  return (
-    <div className="p-12 bg-white shadow-md w-full h-[100vh]">
-      {
-        lineItem.productType &&
-        <div className="flex flex-col">
-          <div className="text-2xl text-purple-600 p-2">
-            {lineItem.productType?.name}
-          </div>
-          <hr className="h-px my-0 bg-gray-200 border-0 dark:bg-gray-700" />
-        </div>
+  const [scrolledTop, setScrolledTop] = useState(false)
 
+  // bind the scroll event to the window
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 30) {
+        setScrolledTop(true)
+      } else {
+        setScrolledTop(false)
       }
-      {
-        lineItem.variantOne &&
-        <div className="flex flex-col">
-          <div className="text-lg">
-            {_.startCase(lineItem.productOne?.type)} - <span className="font-bold">{lineItem.productOne?.name}</span> /
-            <span className="text-gray-500">{lineItem.variantOne?.name}</span>
+    })
+  }, [])
+
+  return (
+    <div className={`sticky top-0 flex flex-row p-12 py-3 bg-white shadow-md h-dvh`}>
+      <div className="w-full">
+        {
+          lineItem.productType &&
+          <div className="flex flex-col">
+            <div className="flex text-xl p-2 justify-center mt-4 mb-0 font-semibold text-gray-600">
+              {_.upperCase(lineItem.productType?.name)}
+            </div>
           </div>
-          <div className="text-lg font-bold justify-center">
-            <OzSmartImage src={lineItem.variantOne?.coverImage} alt={lineItem.variantOne?.name || ""} width={100} height={100} crop='scale' className='object-contain' />
+        }
+
+        <VariantDisplay
+          productName={`Product One`}
+          lineItem={lineItem}
+          product={lineItem.productOne}
+          variant={lineItem.variantOne}
+        />
+
+        {
+          lineItem.variantTwo && lineItem.productTwo && (
+            <VariantDisplay
+              productName={`Product Two`}
+              lineItem={lineItem}
+              product={lineItem.productTwo}
+              variant={lineItem.variantTwo}
+            />
+          )
+        }
+        {
+          lineItem.roomName &&
+          <div className="flex flex-col">
+            <DividingLine />
+            <div className="flex flex-row text-sm justify-between">
+              <div className="font-semibold">ROOM: </div>
+              <div>{lineItem.roomName}</div>
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.variantTwo &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            {_.startCase(lineItem.productTwo?.type)} - {lineItem.productTwo?.name} /
-            <span className="text-gray-500">{lineItem.variantTwo?.name}</span>
+        }
+        {
+          <div className="flex flex-col">
+            <DividingLine />
+            <div className="flex flex-row text-sm justify-between">
+              <div>WIDTH: </div>
+              <div>{lineItem.width} mm</div>
+            </div>
           </div>
-          <div className="text-lg font-bold">
-            <OzSmartImage src={lineItem.variantTwo?.coverImage} alt={lineItem.variantTwo?.name || ""} width={100} height={100} crop='scale' className='object-contain' />
+        }
+        {
+          <div className="flex flex-col">
+            <DividingLine />
+            <div className="flex flex-row text-sm justify-between">
+              <div>HEIGHT: </div>
+              <div>{lineItem.height} mm</div>
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.width &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Width: {lineItem.width}cm
+        }
+        {
+          lineItem.curtainStackTypeKey &&
+          <div className="flex flex-col">
+            <div className="text-lg font-bold">
+              Stack: {_.startCase(lineItem.curtainStackTypeKey)}
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.height &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Height: {lineItem.height}cm
+        }
+        {
+          lineItem.curtainFittingTypeKey &&
+          <div className="flex flex-col">
+            <div className="text-lg font-bold">
+              Fitting: {_.startCase(lineItem.curtainFittingTypeKey)}
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.curtainStackTypeKey &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Stack: {_.startCase(lineItem.curtainStackTypeKey)}
+        }
+        {
+          lineItem.curtainHeadTypeKey &&
+          <div className="flex flex-col">
+            <div className="text-lg font-bold">
+              Heading: {_.startCase(lineItem.curtainHeadTypeKey)}
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.curtainFittingTypeKey &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Fitting: {_.startCase(lineItem.curtainFittingTypeKey)}
+        }
+        {
+          lineItem.curtainFinishTypeKey &&
+          <div className="flex flex-col">
+            <div className="text-lg font-bold">
+              Finish: {_.startCase(lineItem.curtainFinishTypeKey)}
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.curtainHeadTypeKey &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Heading: {_.startCase(lineItem.curtainHeadTypeKey)}
+        }
+        {
+          lineItem.curtainTrackTypeKey &&
+          <div className="flex flex-col">
+            <div className="text-lg font-bold">
+              Track: {_.startCase(lineItem.curtainTrackTypeKey)}
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.curtainFinishTypeKey &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Finish: {_.startCase(lineItem.curtainFinishTypeKey)}
+        }
+        {
+          lineItem.curtainHem &&
+          <div className="flex flex-col">
+            <div className="text-lg font-bold">
+              Hem: {_.startCase(lineItem.curtainHem)}
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.curtainTrackTypeKey &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Track: {_.startCase(lineItem.curtainTrackTypeKey)}
+        }
+        {
+          lineItem.quantity &&
+          <div className="flex flex-col">
+            <div className="text-lg font-bold">
+              Quantity: {lineItem.quantity}
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.curtainHem &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Hem: {_.startCase(lineItem.curtainHem)}
+        }
+        {
+          lineItem.price &&
+          <div className="flex flex-col">
+            <div className="text-lg font-bold">
+              Price: ${lineItem.price}
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.quantity &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Quantity: {lineItem.quantity}
+        }
+        {
+          lineItem.totalPrice &&
+          <div className="flex flex-col">
+            <div className="text-lg font-bold">
+              Total Price: ${lineItem.totalPrice}
+            </div>
           </div>
-        </div>
-      }
-      {
-        lineItem.price &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Price: ${lineItem.price}
-          </div>
-        </div>
-      }
-      {
-        lineItem.totalPrice &&
-        <div className="flex flex-col">
-          <div className="text-lg font-bold">
-            Total Price: ${lineItem.totalPrice}
-          </div>
-        </div>
-      }
+        }
+      </div>
+
     </div>
   )
 }

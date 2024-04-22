@@ -18,4 +18,5 @@ export type Product = {
   maxWidth: number
   disabled?: boolean
   archived?: boolean
+  selected?: boolean
 }

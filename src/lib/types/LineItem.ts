@@ -26,5 +26,6 @@ export type LineItem = {
   quantity?: number,
   price?: number,
   totalPrice?: number,
-  gst?: number
+  gst?: number,
+  roomName?: string | null,
 }

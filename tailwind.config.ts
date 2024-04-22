@@ -25,6 +25,13 @@ const config: Config = {
       '3xl': '1920px',
       '4xl': '1920px',
     },
+    text: {
+      '2xs': '.5rem',
+      '3xs': '.4rem',
+      '4xs': '.3rem',
+      '5xs': '.2rem',
+      '6xs': '.1rem',
+    },
     container: {
       screens: {
         sm: '100%',

@@ -1,22 +1,18 @@
 'use client';
 
 import CurtainTypeSelector from "../../components/CurtainTypeSelector";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Summary from "../../components/Summary"
 import VariantSelector from "../../components/VariantSelector";
 import SelectorHeader from "@/app/components/SelectorHeader";
 import lineItemContext from "@/app/components/contexts/LineItemContext";
 import { LineItem } from "@/lib/types/LineItem";
 import { Product } from "@/lib/types/Product";
-import { ProductTypeName, productTypeMap } from "@/lib/types/ProductType";
+import { ProductType, ProductTypeName, productTypeMap } from "@/lib/types/ProductType";
 import SizeSelector from "@/app/components/SizeSelector";
-import CurtainFittingSelector from "@/app/components/CurtainFittingSelector";
-import CurtainStackSelector from "@/app/components/CurtainStackSelector";
-import CurtainHeadSelector from "@/app/components/CurtainHeadSelector";
-import CurtainFinishSelector from "@/app/components/CurtainFinishSelector";
-import CurtainTrackSelector from "@/app/components/CurtainTrackSelector";
 import CommonSelector from "@/app/components/sharedComponents/CommonSelector";
 import { curtainFinishTypes, curtainFittingTypes, curtainHeadTypes, curtainStackTypes, curtainTrackTypes } from "@/lib/types/CommonSelectorOption";
+import { Variant } from "@/lib/types/Variant";
 
 export default function CurtainBuilder() {
   const [lineItem, setLineItem] = useState<LineItem>({
@@ -29,133 +25,113 @@ export default function CurtainBuilder() {
     variantTwo: null,
   })
 
+  const [productType, setProductType] = useState<ProductType | null>(null)
+  const [productTypeOne, setProductTypeOne] = useState<ProductType | null>(null)
+  const [productTypeTwo, setProductTypeTwo] = useState<ProductType | null>(null)
+  const [productOne, setProductOne] = useState<Product | null>(null)
+  const [productTwo, setProductTwo] = useState<Product | null>(null)
+  const [variantOne, setVariantOne] = useState<Variant | null>(null)
+  const [variantTwo, setVariantTwo] = useState<Variant | null>(null)
+  const [width, setWidth] = useState<number>(0)
+  const [height, setHeight] = useState<number>(0)
+  const [roomName, setRoomName] = useState<string | null>()
+
+  const [productOneSelectableProducts, setProductOneSelectableProducts] = useState<Product[]>([])
+  const [productTwoSelectableProducts, setProductTwoSelectableProducts] = useState<Product[]>([])
+
+  const getProductsByTypeName = async (typeName: ProductTypeName) => {
+    const res = await fetch(`/api/getProductsByType?typeName=${typeName}`)
+    const products = await res.json()
+    return products
+  }
+
   useEffect(() => {
-    setLineItem((prev) => {
-      return {
-        ...prev,
-        productOne: null,
-        variantOne: null,
-        productTwo: null,
-        variantTwo: null,
-        productTypeOne: lineItem.productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN] ? productTypeMap[ProductTypeName.BLOCKOUT_CURTAIN] : lineItem.productType,
-        productTypeTwo: lineItem.productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN] ? productTypeMap[ProductTypeName.SHEER_CURTAIN] : null,
-      }
+    setLineItem({
+      productType,
+      productTypeOne,
+      productTypeTwo,
+      productOne,
+      productTwo,
+      variantOne,
+      variantTwo,
+      width,
+      height,
+      roomName,
     })
-  }, [lineItem.productType])
+  }, [productType, productTypeOne, productTypeTwo, productOne, productTwo, variantOne, variantTwo, width, height, roomName])
 
-  const ProductTypeSelector = () => {
-    return (
-      <>
-        <SelectorHeader order={1} label='Choose your curtain type' />
-        <CurtainTypeSelector />
-      </>
-    )
-  }
-
-  const ProductOneSelectorWrapper = () => {
-    return (
-      lineItem.productTypeOne &&
-      <>
-        <SelectorHeader order={2} label={`Choose your ${lineItem.productTypeOne && lineItem.productTypeTwo ? "fabrics" : "fabric"}`} />
-        <VariantSelector
-          selectedProduct={lineItem.productOne}
-          selectedVariant={lineItem.variantOne}
-          productType={lineItem.productTypeOne}
-          onProductSelected={
-            (product: Product | null) => {
-              setLineItem((prev) => {
-                return {
-                  ...prev,
-                  productOne: product
-                }
-              })
-            }
-          }
-          onVariantSelected={
-            (variant) => {
-              setLineItem((prev) => {
-                return {
-                  ...prev,
-                  variantOne: variant
-                }
-              })
-            }
-          }
-        />
-      </>
-    )
-  }
-
-  const ProductTwoSelectorWrapper = () => {
-    return (
-      lineItem.productTypeTwo &&
-      <>
-        <VariantSelector
-          selectedProduct={lineItem.productTwo}
-          selectedVariant={lineItem.variantTwo}
-          productType={lineItem.productTypeTwo}
-          onProductSelected={
-            (product: Product | null) => {
-              setLineItem((prev) => {
-                return {
-                  ...prev,
-                  productTwo: product
-                }
-              })
-            }
-          }
-          onVariantSelected={
-            (variant) => {
-              setLineItem((prev) => {
-                return {
-                  ...prev,
-                  variantTwo: variant
-                }
-              })
-            }
-          }
-        />
-      </>
-    )
-  }
-
-  const SizeSelectorWrapper = () => {
-    let maxWidth = 0
-    let maxHeight = 0
-    if (lineItem.productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN]) {
-      if (lineItem.productOne && lineItem.productTwo) {
-        maxWidth = Math.min(lineItem.productOne.maxWidth, lineItem.productTwo.maxWidth)
-        maxHeight = Math.min(lineItem.productOne.maxHeight, lineItem.productTwo.maxHeight)
-      } else {
-        return null
-      }
-    } else {
-      if (lineItem.productOne) {
-        maxWidth = lineItem.productOne.maxWidth
-        maxHeight = lineItem.productOne.maxHeight
-      } else {
-        return null
-      }
+  useEffect(() => {
+    if (productTypeOne) {
+      getProductsByTypeName(productTypeOne.typeName).then((products) => {
+        setProductOneSelectableProducts(products)
+      })
     }
+  }, [productTypeOne])
 
+  useEffect(() => {
+    if (productTypeTwo) {
+      getProductsByTypeName(productTypeTwo.typeName).then((products) => {
+        setProductTwoSelectableProducts(products)
+      })
+    }
+  }, [productTypeTwo])
+
+  useEffect(() => {
+    // set productTypeOne and productTypeTwo based on productType
+    setProductTypeOne(productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN] ? productTypeMap[ProductTypeName.BLOCKOUT_CURTAIN] : productType)
+    setProductTypeTwo(productType === productTypeMap[ProductTypeName.DOUBLE_CURTAIN] ? productTypeMap[ProductTypeName.SHEER_CURTAIN] : null)
+  }, [productType])
+
+  const ProductOneSelectorWrapper = useMemo(() => {
     return (
-      lineItem.productType &&
+      productTypeOne &&
+      <>
+        <SelectorHeader order={2} label={`Choose your ${productTypeOne && productTypeTwo ? "fabrics" : "fabric"}`} />
+        <VariantSelector
+          key={'one'}
+          products={productOneSelectableProducts}
+          productType={productTypeOne}
+          onProductSelected={setProductOne}
+          onVariantSelected={setVariantOne}
+        />
+      </>
+    )
+  }, [productTypeOne, productOneSelectableProducts, productTypeTwo])
+
+  const ProductTwoSelectorWrapper = useMemo(() => {
+    return (
+      productTypeTwo &&
+      <>
+        <VariantSelector
+          key={'two'}
+          products={productTwoSelectableProducts}
+          productType={productTypeTwo}
+          onProductSelected={setProductTwo}
+          onVariantSelected={setVariantTwo}
+        />
+      </>
+    )
+  }, [productTwoSelectableProducts, productTypeTwo])
+
+  const SizeSelectorWrapper = useMemo(() => {
+    return (
+      productType &&
       <>
         <SelectorHeader order={3} label='Measurements' />
         <SizeSelector
-          maxWidth={maxWidth}
-          maxHeight={maxHeight}
-          defaultName="Room 1 Window 1"
+          onWidthChange={setWidth}
+          onHeightChange={setHeight}
+          onRoomNameChange={setRoomName}
         />
       </>
     )
-  }
+  }, [productType])
 
   const CurtainStackSelectorWrapper = () => {
     return (
       lineItem.productOne &&
       <>
-        <CommonSelector options={curtainStackTypes} title="Curtain Stack" />
+        <CommonSelector key={'stack'} options={curtainStackTypes} title="Curtain Stack" />
       </>
     )
   }
@@ -197,29 +173,32 @@ export default function CurtainBuilder() {
   }
 
   return (
-    <div className="flex flex:col lg:flex-row gap-1">
-      <lineItemContext.Provider value={{ lineItem, setLineItem }}>
-        <div className='grow mini-h-[100dvh]'>
-
-          <CurtainTypeSelector />
-          <ProductOneSelectorWrapper />
-          <ProductTwoSelectorWrapper />
-          <SizeSelectorWrapper />
-          {
-            lineItem.productOne &&
-            <SelectorHeader order={4} label='Build your own style' />
-          }
-
-          <CurtainStackSelectorWrapper />
-          <CurtainFittingSelectorWrapper />
-          <CurtainHeadSelectorWrapper />
-          <CurtainFinishSelectorWrapper />
-          <CurtainTrackSelectorWrapper />
-        </div>
-        <div className='mini-h-[100dvh]'>
-          <Summary lineItem={lineItem} />
-        </div>
-      </lineItemContext.Provider>
+    <div className="w-full flex flex-col md:flex-row gap-1">
+      <div className='basis-3/4 flex flex-col mini-h-[100dvh]'>
+        <CurtainTypeSelector
+          selectedProductType={productType}
+          onSelected={(productType) => {
+            if (productType) {
+              setProductType(productType)
+            }
+          }}
+        />
+        {ProductOneSelectorWrapper}
+        {ProductTwoSelectorWrapper}
+        {SizeSelectorWrapper}
+        {
+          lineItem.productOne &&
+          <SelectorHeader order={4} label='Build your own style' />
+        }
+        <CurtainStackSelectorWrapper />
+        <CurtainFittingSelectorWrapper />
+        <CurtainHeadSelectorWrapper />
+        <CurtainFinishSelectorWrapper />
+        <CurtainTrackSelectorWrapper />
+      </div>
+      <div className='basis-1/4'>
+        <Summary lineItem={lineItem} />
+      </div>
     </div >
   );
 }

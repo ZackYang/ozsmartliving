@@ -1,5 +1,7 @@
 {
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
-    "javascript.format.insertSpaceAfterConstructor": true
+    "javascript.format.insertSpaceAfterConstructor": true,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
 }

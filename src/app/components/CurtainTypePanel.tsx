@@ -6,45 +6,41 @@ import lineItemContext from "./contexts/LineItemContext";
 
 export default function CurtainTypePanel(
   {
-    productType
+    className,
+    productType,
+    selected,
+    onSelected,
   }: {
-    productType: ProductType
+    className?: string,
+    productType: ProductType,
+    selected: boolean,
+    onSelected?: (productType: ProductType) => void
   }
 ) {
-  const { lineItem, setLineItem } = useContext(lineItemContext)
-
-  const setProductTypes = (productType: ProductType) => {
-    setLineItem((prev) => {
-      return {
-        ...prev,
-        productType: productType,
-      }
-    })
-  }
-
-  const cardClassName = `basis-full m-1 bg-white rounded border-2 transition duration-200 ease-in-out group p-3 hover:border-teal-500 hover:cursor-pointer`
+  const cardClassName = `w-full flex flex-row md:flex-col bg-white rounded border-2 transition duration-200 ease-in-out group hover:border-teal-500 hover:cursor-pointer`
 
   return (
-    <div key={productType.typeName} className=''>
+    <div key={productType.typeName} className={`${className} p-3 basis-1/1 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5 3xl:basis-1/6`}>
       <div
-        className={`${lineItem.productType?.typeName === productType.typeName ? 'border-teal-500' : 'border-white'} ${cardClassName}`}
+        className={`${selected ? 'border-teal-500' : 'border-white'} ${cardClassName}`}
         onClick={() => {
-          setProductTypes(productType)
+          if (onSelected)
+            onSelected(productType)
         }}
       >
-        <div className='flex flex-row w-full justify-center'>
-          <OzSmartImage src={productType.src} alt={productType.name} className="grayscale-[75%] rounded inline-block w-full max-w-xs" width={500} height={500} />
+        <div className="basis-1/2 flex flex-col justify-center">
+          <OzSmartImage src={productType.src} alt={productType.name} className="grayscale-[75%] rounded" width={500} height={500} />
         </div>
-        <h5 className="text-center text-base md:text-xl font-bold tracking-tight py-4">
-          {productType.name}
-          {
-            <div className="text-sm text-gray-700 dark:text-gray-400">
-              from $ <span className="text-teal-600">{productType.priceFrom}</span>
-            </div>
-          }
-        </h5>
 
-        <>
+        <div className="basis-1/2 flex flex-col justify-center">
+          <h5 className="text-center text-base md:text-xl font-bold tracking-tight py-4">
+            {productType.name}
+            {
+              <div className="text-sm text-gray-700 dark:text-gray-400">
+                from $ <span className="text-teal-600">{productType.priceFrom}</span>
+              </div>
+            }
+          </h5>
           <div className="flex flex-row w-full justify-center">
             <ul className="font-normal text-gray-700 dark:text-gray-400">
               {
@@ -62,13 +58,12 @@ export default function CurtainTypePanel(
               }
             </ul>
           </div>
-
           <div className="flex flex-row w-full justify-end -mt-3">
-            <div className={`${lineItem.productType?.typeName === productType.typeName ? 'opacity-100' : 'opacity-0'}  drop-shadow-md inline-block -bottom-3 -right-3 text-5xl text-teal-500`} >
+            <div className={`${selected ? 'opacity-100' : 'opacity-0'}  drop-shadow-md inline-block -bottom-3 -right-3 text-5xl text-teal-500`} >
               <PiCheckCircleFill />
             </div>
           </div>
-        </>
+        </div>
       </div>
     </div >
   )

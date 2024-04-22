@@ -1,39 +1,69 @@
 import { Product } from "@/lib/types/Product"
-import { Variant } from "@/lib/types/Variant"
-import userMediaSize from '@/lib/userMediaSize'
-import _ from 'lodash'
-import ProductsRow from "./ProductsRow"
+import ProductThumbnail from "./ProductThumbnail"
+import VariantList from "./VariantList"
+import { useContext } from "react";
+import VariantSelectorContext from "./contexts/VariantSelectorContext";
 
-export default function ProductsList({
-  products
-}: {
-  products: Product[]
-}) {
-  const responsive = {
-    xs: 4,
-    sm: 5,
-    md: 6,
-    lg: 7,
-    xl: 7,
-    '2xl': 7,
-    '3xl': 8,
-    '4xl': 8,
+export default function ProductList(
+  {
+    products,
+    index,
+  }: {
+    products: Product[],
+    index: number,
   }
-
-  const colNumber = responsive[userMediaSize() as keyof typeof responsive];
+) {
+  const {
+    selectedProduct,
+    onProductSelected,
+    selectedVariant,
+    onVariantSelected
+  } = useContext(VariantSelectorContext)
 
   return (
     <>
+      <div key={index} className={`flex flex-row`}>
+        {
+          products.map((product) => {
+            return (
+              <ProductThumbnail
+                key={product.id}
+                selected={selectedProduct?.id === product.id}
+                onClick={() => {
+                  onProductSelected(product)
+                  onVariantSelected(null)
+                }}
+                product={product}
+                className="max-w-[100px] m-1 cursor-pointer"
+              />
+            )
+          })
+        }
+      </div>
       {
-        _.chunk(products, colNumber).map((products, index) => {
-          return (
-            <ProductsRow
-              key={index}
-              products={products}
-              index={index} />
-          )
-        })
+        selectedProduct && products.map((product) => { return product.id }).includes(selectedProduct.id) && (
+          <div className='flex flex-row'>
+            <div className='text-3xl text-teal-500'>
+              {
+                products.map((product) => {
+                  return (
+                    <VariantList
+                      onSelected={(variant) => {
+                        onVariantSelected(variant)
+                      }}
+                      selectedVariant={selectedVariant}
+                      key={product.id}
+                      product={product}
+                      variants={product.variants || []}
+                      className={`${selectedProduct?.id === product.id ? 'block' : 'hidden'}`
+                      } />
+                  )
+                })
+              }
+            </div>
+          </div>
+        )
       }
     </>
-  );
+  )
 }
