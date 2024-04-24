@@ -214,7 +214,7 @@ export default function CurtainBuilder() {
         <CommonSelector onSelected={setCurtainFinishType} key={'finish'} options={curtainFinishTypes} title="Curtain Finish" />
         <CommonSelector onSelected={setCurtainTrackType} key={'track'} options={curtainTrackTypes} title="Curtain Track" />
       </div>
-      <div className='basis-1/4'>
+      <div className='basis-1/4 z-50'>
         <Summary lineItem={lineItem} />
       </div>
     </div >

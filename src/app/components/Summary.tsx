@@ -66,13 +66,14 @@ export default function Summary(
   }, [])
 
   return (
-    <div className={`sticky top-0 flex flex-row px-12 py-3 bg-white shadow-md h-dvh`}>
+    <div className={`sticky top-0 flex flex-row md:px-6 lg:px-12 py-3 bg-white shadow-md`}>
       <div className="w-full">
         {
-          lineItem.productType &&
           <div className="flex flex-col">
             <div className="flex text-xl p-1 justify-center mt-0 mb-0 font-semibold text-gray-600">
-              {_.upperCase(lineItem.productType?.name)}
+              {
+                lineItem.productType ? _.upperCase(lineItem.productType?.name) : "Please select a product"
+              }
             </div>
           </div>
         }
@@ -104,111 +105,82 @@ export default function Summary(
             </div>
           </div>
         }
-        <DividingLine />
         {
-          <div className="flex flex-col">
-
-            <div className="flex flex-row text-sm justify-between">
-              <div>WIDTH: </div>
-              <div>{lineItem.width} mm</div>
-            </div>
-            <DividingLine />
-          </div>
-        }
-        {
-          <div className="flex flex-col">
-
-            <div className="flex flex-row text-sm justify-between">
-              <div>HEIGHT: </div>
-              <div>{lineItem.height} mm</div>
-            </div>
-            <DividingLine />
-          </div>
+          lineItem.variantOne && (
+            <>
+              <DividingLine />
+              <div className="flex flex-col">
+                <div className="flex flex-row text-sm justify-between">
+                  <div className="font-medium">WIDTH: </div>
+                  <div>{lineItem.width} mm</div>
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex flex-row text-sm justify-between">
+                  <div className="font-medium">HEIGHT: </div>
+                  <div>{lineItem.height} mm</div>
+                </div>
+                <DividingLine />
+              </div>
+            </>
+          )
         }
         {
           lineItem.curtainStackType &&
           <div className="flex flex-col">
-            <div className="flex flex-row text-sm justify-between">
-              <div className="font-semibold">STACK:</div>
-              <div>{_.startCase(lineItem.curtainStackType?.name)}</div>
+            <div className="flex flex-row text-sm justify-between mb-3">
+              <div className="font-medium">STACK:</div>
+              <div className="font-light">{_.startCase(lineItem.curtainStackType?.name)}</div>
             </div>
-            <DividingLine />
           </div>
         }
         {
           lineItem.curtainFittingType &&
           <div className="flex flex-col">
-            <div className="flex flex-row text-sm justify-between">
-              <div className="font-semibold">FITTING:</div>
-              <div>{_.startCase(lineItem.curtainFittingType?.name)}</div>
+            <div className="flex flex-row text-sm justify-between mb-3">
+              <div className="font-medium">FITTING:</div>
+              <div className="font-light">{_.startCase(lineItem.curtainFittingType?.name)}</div>
             </div>
-            <DividingLine />
           </div>
         }
         {
           lineItem.curtainHeadType &&
           <div className="flex flex-col">
-            <div className="flex flex-row text-sm justify-between">
-              <div className="font-semibold">HEAD:</div>
-              <div>{_.startCase(lineItem.curtainHeadType?.name)}</div>
+            <div className="flex flex-row text-sm justify-between mb-3">
+              <div className="font-medium">HEAD:</div>
+              <div className="font-light">{_.startCase(lineItem.curtainHeadType?.name)}</div>
             </div>
-            <DividingLine />
           </div>
         }
         {
           lineItem.curtainFinishType &&
           <div className="flex flex-col">
-            <div className="flex flex-row text-sm justify-between">
-              <div className="font-semibold">FINISH:</div>
-              <div>{_.startCase(lineItem.curtainFinishType?.name)}</div>
+            <div className="flex flex-row text-sm justify-between mb-3">
+              <div className="font-medium">FINISH:</div>
+              <div className="font-light">{_.startCase(lineItem.curtainFinishType?.name)}</div>
             </div>
-            <DividingLine />
           </div>
         }
         {
           lineItem.curtainTrackType &&
           <div className="flex flex-col">
-            <div className="flex flex-row text-sm justify-between">
-              <div className="font-semibold">TRACK:</div>
-              <div>{_.startCase(lineItem.curtainTrackType?.name)}</div>
+            <div className="flex flex-row text-sm justify-between mb-3">
+              <div className="font-medium">TRACK:</div>
+              <div className="font-light">{_.startCase(lineItem.curtainTrackType?.name)}</div>
             </div>
-            <DividingLine />
           </div>
         }
         {
           lineItem.curtainHem &&
           <div className="flex flex-col">
-            <div className="flex flex-row text-sm justify-between">
-              <div className="font-semibold">HEM:</div>
-              <div>{_.startCase(lineItem.curtainHem)}</div>
-            </div>
-            <DividingLine />
-          </div>
-        }
-        {
-          lineItem.quantity &&
-          <div className="flex flex-col">
-            <div className="">
-              Quantity: {lineItem.quantity}
+            <div className="flex flex-row text-sm justify-between mb-3">
+              <div className="font-medium">HEM:</div>
+              <div className="font-light">{_.startCase(lineItem.curtainHem)}</div>
             </div>
           </div>
         }
-        {
-          lineItem.price &&
-          <div className="flex flex-col">
-            <div className="">
-              Price: ${lineItem.price}
-            </div>
-          </div>
-        }
-        {
-          lineItem.totalPrice &&
-          <div className="flex flex-col">
-            <div className="">
-              Total Price: ${lineItem.totalPrice}
-            </div>
-          </div>
-        }
+
+        <DividingLine />
       </div>
 
     </div>
